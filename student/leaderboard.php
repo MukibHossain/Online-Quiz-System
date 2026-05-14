@@ -1,15 +1,110 @@
-<body style="background:#111;color:white;font-family:Arial;padding:20px;">
+<?php require '../config/database.php'; ?>
+<!DOCTYPE html>
+<html>
 
-<h1>Leaderboard</h1>
+<head>
 
-<a href="dashboard.php">
+<title>Leaderboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body class="bg-dark text-white">
+
+
+<div class="container mt-5">
+
+
+<h1>
+
+🏆 Leaderboard
+
+</h1>
+
+
+<a href="dashboard.php"
+class="btn btn-info">
+
 ← Back
+
 </a>
 
-<h3>🥇 Student A - 98</h3>
 
-<h3>🥈 Student B - 95</h3>
+<br><br>
 
-<h3>🥉 Student C - 92</h3>
+
+<table class="table table-dark">
+
+
+<tr>
+
+<th>Rank</th>
+
+<th>Name</th>
+
+<th>Score</th>
+
+</tr>
+
+
+
+<?php
+
+$data=
+$conn->query(
+
+"SELECT * FROM leaderboard
+ORDER BY score DESC"
+
+);
+
+
+$rank=1;
+
+
+while(
+$row=
+$data->fetch_assoc()
+){
+
+?>
+
+
+<tr>
+
+<td>
+
+<?= $rank++ ?>
+
+</td>
+
+
+<td>
+
+<?= $row['name'] ?>
+
+</td>
+
+
+<td>
+
+<?= $row['score'] ?>
+
+</td>
+
+</tr>
+
+
+<?php } ?>
+
+
+</table>
+
+
+</div>
+
 
 </body>
+</html>

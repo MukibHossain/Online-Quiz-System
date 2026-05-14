@@ -1,11 +1,12 @@
+<?php require '../config/database.php'; ?>
 <!DOCTYPE html>
 <html>
 
 <head>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Quiz Management</title>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
@@ -23,53 +24,154 @@ Quiz Management
 </h1>
 
 
-<button
-class="btn btn-success"
-data-bs-toggle="modal"
-data-bs-target="#myModal">
+<a href="dashboard.php"
+class="btn btn-info">
 
-+ Add Quiz
+← Back
 
-</button>
+</a>
 
 
-
-<div
-class="modal fade"
-id="myModal">
+<br><br>
 
 
-<div class="modal-dialog">
-
-
-<div class="modal-content">
-
-
-<div class="modal-body">
+<form method="POST">
 
 
 <input
-placeholder="Quiz Name"
-class="form-control">
+name="title"
+class="form-control"
+placeholder="Quiz Name">
+
 
 <br>
 
 
 <input
-placeholder="Time"
-class="form-control">
+name="time"
+class="form-control"
+placeholder="Time in Minutes">
 
 
-</div>
+<br>
 
 
-</div>
+<button
+name="save"
+class="btn btn-success">
+
+Save Quiz
+
+</button>
 
 
-</div>
+</form>
 
 
-</div>
+
+<?php
+
+if(isset($_POST['save'])){
+
+$title=$_POST['title'];
+
+$time=$_POST['time'];
+
+
+$conn->query(
+
+"INSERT INTO quizzes(
+
+title,
+time_limit
+
+)
+
+VALUES(
+
+'$title',
+'$time'
+
+)"
+
+);
+
+echo
+"<div class='alert alert-success mt-3'>
+Quiz Added 🎉
+</div>";
+
+}
+
+?>
+
+
+
+<br><br>
+
+
+<table class="table table-dark">
+
+
+<tr>
+
+<th>ID</th>
+
+<th>Quiz</th>
+
+<th>Time</th>
+
+</tr>
+
+
+
+<?php
+
+$data=
+$conn->query(
+"SELECT * FROM quizzes"
+);
+
+
+while(
+$row=
+$data->fetch_assoc()
+){
+
+?>
+
+
+<tr>
+
+<td>
+
+<?= $row['id'] ?>
+
+</td>
+
+
+<td>
+
+<?= $row['title'] ?>
+
+</td>
+
+
+<td>
+
+<?= $row['time_limit'] ?>
+
+min
+
+</td>
+
+</tr>
+
+
+<?php } ?>
+
+
+</table>
 
 
 </div>

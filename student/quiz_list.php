@@ -1,3 +1,4 @@
+<?php require '../config/database.php'; ?>
 <!DOCTYPE html>
 <html>
 
@@ -34,115 +35,60 @@ class="btn btn-info">
 <br><br>
 
 
-<input
-id="search"
-class="form-control"
-placeholder="Search quiz...">
+
+<?php
+
+$data=
+$conn->query(
+"SELECT * FROM quizzes"
+);
 
 
-<br>
+while(
+$row=
+$data->fetch_assoc()
+){
+
+?>
 
 
-<div
-class="card bg-secondary p-3 mb-3"
-id="quiz1">
+<div class="card bg-secondary p-3 mb-3">
+
 
 <h3>
 
-Python Quiz
+<?= $row['title'] ?>
 
 </h3>
 
 
-<div class="progress">
+<p>
 
-<div
-class="progress-bar"
-style="width:70%">
+Time:
 
-70%
+<?= $row['time_limit'] ?>
 
-</div>
+Minutes
 
-</div>
+</p>
 
 
-</div>
+<a
+href="quiz_play.php"
+class="btn btn-success">
 
+Start Quiz
 
-
-<div
-class="card bg-secondary p-3"
-id="quiz2">
-
-<h3>
-
-Automata Quiz
-
-</h3>
-
-
-<div class="progress">
-
-<div
-class="progress-bar"
-style="width:50%">
-
-50%
-
-</div>
-
-</div>
+</a>
 
 
 </div>
 
 
+<?php } ?>
+
+
 </div>
-
-
-
-<script>
-
-document
-.getElementById(
-'search'
-)
-
-.addEventListener(
-'keyup',
-
-function(){
-
-let value=
-this.value
-.toLowerCase();
-
-
-document
-.querySelectorAll(
-'.card'
-)
-
-.forEach(
-card=>{
-
-card.style.display=
-
-card.innerText
-.toLowerCase()
-.includes(value)
-
-? ''
-
-:'none';
-
-});
-
-});
-
-</script>
-
 
 
 </body>
