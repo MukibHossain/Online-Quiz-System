@@ -4,14 +4,39 @@
 
 <head>
 
-<title>Quiz List</title>
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+
+background:#0f2027;
+
+color:white;
+
+}
+
+
+.quiz{
+
+background:#1f2937;
+
+padding:25px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+box-shadow:0 0 20px black;
+
+}
+
+</style>
 
 </head>
 
 
-<body class="bg-dark text-white">
+<body>
 
 
 <div class="container mt-5">
@@ -19,7 +44,7 @@
 
 <h1>
 
-Available Quizzes
+🚀 Available Quizzes
 
 </h1>
 
@@ -52,29 +77,31 @@ $data->fetch_assoc()
 ?>
 
 
-<div class="card bg-secondary p-3 mb-3">
+<div class="quiz">
 
 
-<h3>
+<h2>
 
 <?= $row['title'] ?>
 
-</h3>
+</h2>
 
 
 <p>
 
-Time:
+⏰
 
 <?= $row['time_limit'] ?>
 
-Minutes
+minutes
 
 </p>
 
 
 <a
-href="quiz_play.php"
+
+href="quiz_play.php?id=<?= $row['id'] ?>"
+
 class="btn btn-success">
 
 Start Quiz

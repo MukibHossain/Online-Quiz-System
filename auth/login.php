@@ -36,6 +36,8 @@ border-radius:20px;
 
 width:400px;
 
+box-shadow:0 0 30px black;
+
 }
 
 </style>
@@ -64,6 +66,7 @@ name="email"
 class="form-control"
 placeholder="Email">
 
+
 <br>
 
 
@@ -72,6 +75,7 @@ type="password"
 name="password"
 class="form-control"
 placeholder="Password">
+
 
 <br>
 
@@ -108,14 +112,16 @@ $email=$_POST['email'];
 $password=$_POST['password'];
 
 
-$sql=
-"SELECT * FROM users
-WHERE email='$email'
-AND password='$password'";
-
-
 $q=
-$conn->query($sql);
+$conn->query(
+
+"SELECT * FROM users
+
+WHERE email='$email'
+
+AND password='$password'"
+
+);
 
 
 $user=
@@ -123,6 +129,10 @@ $q->fetch_assoc();
 
 
 if($user){
+
+$_SESSION['user_id']=$user['id'];
+
+$_SESSION['user_name']=$user['name'];
 
 $_SESSION['role']=$user['role'];
 
@@ -145,13 +155,6 @@ header(
 
 exit();
 
-}else{
-
-echo
-"<p class='text-danger mt-3'>
-Wrong Login
-</p>";
-
 }
 
 }
@@ -164,7 +167,7 @@ Wrong Login
 
 <a href="../index.php">
 
-← Back
+🏠 Home
 
 </a>
 

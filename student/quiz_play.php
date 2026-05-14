@@ -1,24 +1,48 @@
+<?php require '../config/database.php'; ?>
+
+<?php
+
+$quiz_id=
+$_GET['id'];
+
+
+$data=
+$conn->query(
+
+"SELECT * FROM questions
+
+WHERE quiz_id='$quiz_id'"
+
+);
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
-
-<title>Quiz Exam</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 
 body{
-background:#111;
+
+background:#0f2027;
+
 color:white;
-font-family:Arial;
-padding:20px;
+
 }
 
-button{
-padding:10px;
-margin:5px;
+.quiz{
+
+background:#1f2937;
+
+padding:30px;
+
+border-radius:20px;
+
 }
 
 </style>
@@ -29,16 +53,23 @@ margin:5px;
 <body>
 
 
+<div class="container mt-5">
+
+
+<div class="quiz">
+
+
 <h1>
 
-Quiz Exam
+📝 Quiz
 
 </h1>
 
 
-<a href="quiz_list.php">
+<a href="../index.php"
+class="btn btn-info">
 
-← Back
+🏠 Home
 
 </a>
 
@@ -46,139 +77,207 @@ Quiz Exam
 <br><br>
 
 
-<h3 id="timer">
-
-10:00
-
-</h3>
+<form method="POST">
 
 
+<?php
 
-<hr>
+$i=1;
 
+while(
+$row=
+$data->fetch_assoc()
+){
 
-
-<p>
-
-1. Python কে develop করেছে?
-
-</p>
-
-
-<input type="radio"> Guido<br>
-
-<input type="radio"> Elon<br>
-
-<input type="radio"> Bill<br><br>
+?>
 
 
+<h4>
 
-<button>
+<?= $i ?>.
 
-Previous
+<?= $row['question'] ?>
 
-</button>
+</h4>
 
 
+<input
+type="radio"
+name="q<?= $row['id'] ?>"
+value="<?= $row['option1'] ?>">
 
-<button>
+<?= $row['option1'] ?>
 
-Next
 
-</button>
+<br>
 
+
+<input
+type="radio"
+name="q<?= $row['id'] ?>"
+value="<?= $row['option2'] ?>">
+
+<?= $row['option2'] ?>
+
+
+<br>
+
+
+<input
+type="radio"
+name="q<?= $row['id'] ?>"
+value="<?= $row['option3'] ?>">
+
+<?= $row['option3'] ?>
+
+
+<br>
+
+
+<input
+type="radio"
+name="q<?= $row['id'] ?>"
+value="<?= $row['option4'] ?>">
+
+<?= $row['option4'] ?>
+
+
+<br><br>
+
+
+<?php
+
+$i++;
+
+}
+
+?>
 
 
 <button
-onclick="submitQuiz()">
+name="submit"
+class="btn btn-success">
 
-Submit
+Submit Quiz
 
 </button>
 
 
-
-<audio id="sound">
-
-<source
-src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg">
-
-</audio>
+</form>
 
 
 
+<?php
 
-<script>
-
-let time = 600;
-
-
-let countdown = setInterval(
-function(){
-
-let min =
-Math.floor(time/60);
-
-let sec =
-time%60;
+if(isset($_POST['submit'])){
 
 
-if(sec<10){
-
-sec="0"+sec;
-
-}
+$user_id=
+$_SESSION['user_id'];
 
 
-document
-.getElementById(
-'timer'
-)
+$questions=
+$conn->query(
 
-.innerHTML=
+"SELECT * FROM questions
 
-"Time Left: "
-+min+":"+sec;
+WHERE quiz_id='$quiz_id'"
 
-
-if(time<=0){
-
-clearInterval(
-countdown
 );
 
-submitQuiz();
+
+$total=0;
+
+$score=0;
+
+
+while(
+$q=
+$questions->fetch_assoc()
+){
+
+$total++;
+
+
+$answer=
+
+$_POST[
+'q'.$q['id']
+]
+
+?? '';
+
+
+if(
+$answer==
+$q['correct_answer']
+){
+
+$score++;
+
+}
 
 }
 
 
-time--;
 
-},1000);
+$conn->query(
 
+"INSERT INTO results(
 
+user_id,
+quiz_id,
+score,
+total
 
-
-function submitQuiz(){
-
-document
-.getElementById(
-'sound'
 )
-.play();
 
+VALUES(
 
-alert(
-"Quiz Submitted 🎉"
+'$user_id',
+'$quiz_id',
+'$score',
+'$total'
+
+)"
+
 );
 
-window.location=
-'result.php';
+
+
+$conn->query(
+
+"INSERT INTO leaderboard(
+
+name,
+score
+
+)
+
+VALUES(
+
+'".$_SESSION['user_name']."',
+'$score'
+
+)"
+
+);
+
+
+
+header(
+"Location: result.php"
+);
 
 }
 
-</script>
+?>
 
+
+</div>
+
+
+</div>
 
 
 </body>

@@ -1,3 +1,4 @@
+<?php require '../config/database.php'; ?>
 <!DOCTYPE html>
 <html>
 
@@ -13,20 +14,12 @@
 <body class="bg-dark text-white">
 
 
-<div class="alert alert-success text-center">
-
-Quiz Submitted Successfully 🎉
-
-</div>
-
-
-
 <div class="container mt-5">
 
 
 <h1>
 
-Quiz Result
+📊 My Result
 
 </h1>
 
@@ -34,7 +27,7 @@ Quiz Result
 <a href="dashboard.php"
 class="btn btn-info">
 
-Back
+← Back
 
 </a>
 
@@ -42,16 +35,61 @@ Back
 <br><br>
 
 
+
+<?php
+
+$user_id=2;
+
+
+$data=
+$conn->query(
+
+"SELECT * FROM results
+WHERE user_id='$user_id'
+ORDER BY id DESC
+LIMIT 1"
+
+);
+
+
+$result=
+$data->fetch_assoc();
+
+
+$score=
+$result['score'] ?? 0;
+
+$total=
+$result['total'] ?? 1;
+
+
+$percentage=
+($score/$total)*100;
+
+?>
+
+
 <h2>
 
-Score: 85%
+Score:
+
+<?= $score ?>
+
+/
+
+<?= $total ?>
 
 </h2>
 
 
-<canvas id="resultChart">
+<h2>
 
-</canvas>
+<?= round($percentage) ?>%
+
+</h2>
+
+
+<canvas id="chart"></canvas>
 
 
 </div>
@@ -63,7 +101,7 @@ Score: 85%
 new Chart(
 
 document.getElementById(
-'resultChart'
+'chart'
 ),
 
 {
@@ -80,8 +118,11 @@ labels:[
 datasets:[{
 
 data:[
-85,
-15
+
+<?= $score ?>,
+
+<?= $total-$score ?>
+
 ]
 
 }]
