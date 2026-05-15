@@ -1,3 +1,80 @@
+<?php require '../config/database.php'; ?>
+
+
+<?php
+
+$user_id=
+$_SESSION['user_id'];
+
+
+$user=
+$conn->query(
+
+"SELECT * FROM users
+
+WHERE id='$user_id'"
+
+)
+
+->fetch_assoc();
+
+
+
+$stats=
+$conn->query(
+
+"SELECT
+
+COUNT(*) total,
+
+AVG(score) average_score,
+
+MAX(score) highest
+
+FROM results
+
+WHERE user_id='$user_id'"
+
+)
+
+->fetch_assoc();
+
+
+
+$total=
+$stats['total'] ?? 0;
+
+
+$average=
+round(
+$stats['average_score'] ?? 0
+);
+
+
+$highest=
+$stats['highest'] ?? 0;
+
+
+
+$image=
+
+!empty(
+$user['photo']
+)
+
+?
+
+"../uploads/".
+$user['photo']
+
+:
+
+"../assets/images/avatar.png";
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -7,86 +84,66 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 <style>
 
 body{
 
-margin:0;
+background:url(
+'../assets/images/student-bg.png'
+);
 
-font-family:Arial;
+background-size:cover;
 
-background:#111;
+background-position:center;
 
-color:white;
-
-transition:.5s;
-
-}
-
-
-.light{
-
-background:white;
-
-color:black;
+min-height:100vh;
 
 }
 
 
-.sidebar{
-
-width:250px;
-
-height:100vh;
-
-background:#222;
+.overlay{
 
 position:fixed;
 
-left:0;
+width:100%;
 
-top:0;
+height:100%;
 
-padding:20px;
-
-overflow:auto;
-
-}
-
-
-.sidebar a{
-
-display:block;
-
-color:white;
-
-text-decoration:none;
-
-padding:15px;
-
-margin:10px 0;
-
-border-radius:10px;
+background:rgba(
+0,
+0,
+0,
+0.75
+);
 
 }
 
 
-.sidebar a:hover{
+.box{
 
-background:#0d6efd;
+position:relative;
 
-}
+z-index:5;
 
+background:rgba(
+255,
+255,
+255,
+0.08
+);
 
-.content{
-
-margin-left:270px;
+backdrop-filter:blur(15px);
 
 padding:30px;
+
+border-radius:25px;
+
+margin-top:40px;
+
+color:white;
 
 }
 
@@ -95,154 +152,235 @@ padding:30px;
 </head>
 
 
-<body id="body">
+<body>
 
 
-<div class="sidebar">
+<div class="overlay"></div>
 
 
-<h3>
-
-🎯 Quiz System
-
-</h3>
+<div class="container">
 
 
-<a href="dashboard.php">
+<div class="box">
 
-Dashboard
+
+<h1>
+
+🎓 Student Dashboard
+
+</h1>
+
+
+<a
+href="../index.php"
+class="btn btn-info">
+
+🏠 Home
 
 </a>
 
 
-<a href="quiz_list.php">
+<a
+href="../auth/login.php"
+class="btn btn-danger">
 
-Quiz
+Logout
 
 </a>
 
 
-<a href="leaderboard.php">
+<br><br>
+
+
+
+<img
+src="<?= $image ?>"
+width="140"
+height="140"
+
+style="
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:4px solid white;
+
+">
+
+
+<h2>
+
+<?= $user['name'] ?>
+
+</h2>
+
+
+<hr>
+
+
+
+<div class="row">
+
+
+<div class="col-md-4">
+
+<div class="card bg-primary text-white p-3">
+
+<h4>
+
+Total Quizzes
+
+</h4>
+
+
+<h2>
+
+<?= $total ?>
+
+</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-4">
+
+<div class="card bg-success text-white p-3">
+
+<h4>
+
+Average Score
+
+</h4>
+
+
+<h2>
+
+<?= $average ?>
+
+</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-4">
+
+<div class="card bg-warning text-dark p-3">
+
+<h4>
+
+Highest Score
+
+</h4>
+
+
+<h2>
+
+<?= $highest ?>
+
+</h2>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<br><br>
+
+
+
+<canvas id="chart"></canvas>
+
+
+
+<br><br>
+
+
+
+<a
+href="quiz_list.php"
+class="btn btn-success">
+
+Start Quiz
+
+</a>
+
+
+<a
+href="leaderboard.php"
+class="btn btn-warning">
 
 Leaderboard
 
 </a>
 
 
-<a href="result.php">
-
-Result
-
-</a>
-
-
-<a href="certificate.php">
-
-Certificate
-
-</a>
-
-
-<a href="profile.php">
+<a
+href="profile.php"
+class="btn btn-primary">
 
 Profile
 
 </a>
 
 
-<br>
-
-
-<button
-onclick="changeMode()"
-class="btn btn-warning w-100">
-
-🌙 Dark / Light
-
-</button>
-
-
-</div>
-
-
-
-
-<div class="content">
-
-
-<h1>
-
-Welcome Student
-
-</h1>
-
-<h3 id="clock"></h3>
-
-<div class="alert alert-success">
-
-System Running Perfectly 🎉
 
 </div>
 
 
 </div>
-
 
 
 
 <script>
 
-function changeMode(){
+new Chart(
 
-document
-.getElementById(
-'body'
-)
+document.getElementById(
+'chart'
+),
 
-.classList
-.toggle(
-'light'
-);
+{
+
+type:'bar',
+
+data:{
+
+labels:[
+
+'Attempts',
+'Average',
+'Highest'
+
+],
+
+datasets:[{
+
+data:[
+
+<?= $total ?>,
+
+<?= $average ?>,
+
+<?= $highest ?>
+
+]
+
+}]
 
 }
 
-
-
-setTimeout(
-
-function(){
-
-alert(
-"Session Expired"
-);
-
-window.location=
-'../auth/login.php';
-
-},
-
-300000
-
-);
-
-
-setInterval(
-
-function(){
-
-document
-.getElementById(
-'clock'
-)
-
-.innerHTML=
-
-new Date()
-.toLocaleTimeString();
-
-},
-
-1000
+}
 
 );
 

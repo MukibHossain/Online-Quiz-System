@@ -1,7 +1,142 @@
+<?php require '../config/database.php'; ?>
+
+
+<?php
+
+$user_id=
+$_SESSION['user_id'];
+
+
+$user=
+$conn->query(
+
+"SELECT * FROM users
+
+WHERE id='$user_id'"
+
+)
+
+->fetch_assoc();
+
+
+
+if(isset($_POST['save'])){
+
+
+$phone=
+$_POST['phone'];
+
+
+$university=
+$_POST['university'];
+
+
+$photo=
+$user['photo'];
+
+
+
+if(
+isset($_FILES['photo'])
+&&
+$_FILES['photo']['error']==0
+){
+
+$uploadDir=
+
+dirname(__DIR__).
+"/uploads/";
+
+
+$fileName=
+
+time().
+"_".
+basename(
+$_FILES['photo']['name']
+);
+
+
+$targetFile=
+
+$uploadDir.
+$fileName;
+
+
+
+if(
+
+move_uploaded_file(
+
+$_FILES['photo']['tmp_name'],
+
+$targetFile
+
+)
+
+){
+
+$photo=
+$fileName;
+
+}
+
+}
+
+
+
+$conn->query(
+
+"UPDATE users
+
+SET
+
+phone='$phone',
+
+university='$university',
+
+photo='$photo'
+
+WHERE id='$user_id'"
+
+);
+
+
+header(
+"Location: profile.php"
+);
+
+exit();
+
+}
+
+
+
+$image=
+
+
+!empty(
+$user['photo']
+)
+
+?
+
+"../uploads/".
+$user['photo']
+
+:
+
+"../assets/images/avatar.png";
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
+
+<title>Profile</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -16,67 +151,130 @@
 
 <h1>
 
-My Profile
+👤 My Profile
 
 </h1>
 
 
-<img
-id="preview"
-width="150">
+<a
+href="dashboard.php"
+class="btn btn-warning">
+
+← Back
+
+</a>
 
 
 <br><br>
 
 
+
+<img
+src="<?= $image ?>"
+width="160"
+height="160"
+
+style="
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:4px solid white;
+
+">
+
+
+<br><br>
+
+
+
+<form
+method="POST"
+enctype="multipart/form-data">
+
+
 <input
 type="file"
-class="form-control"
-onchange="showImage(event)">
-
-
-<br>
-
-
-<input
-value="Student"
+name="photo"
 class="form-control">
 
 
 <br>
 
 
+<input
+name="phone"
+value="<?= $user['phone'] ?>"
+class="form-control"
+placeholder="Phone">
+
+
+<br>
+
+
+<input
+name="university"
+value="<?= $user['university'] ?>"
+class="form-control"
+placeholder="University">
+
+
+<br>
+
+
 <button
+name="save"
 class="btn btn-success">
 
-Update
+Save Profile
 
 </button>
 
 
+</form>
+
+
+<hr>
+
+
+<h4>
+
+Name:
+
+<?= $user['name'] ?>
+
+</h4>
+
+
+<h4>
+
+Email:
+
+<?= $user['email'] ?>
+
+</h4>
+
+
+<h4>
+
+Phone:
+
+<?= $user['phone'] ?>
+
+</h4>
+
+
+<h4>
+
+University:
+
+<?= $user['university'] ?>
+
+</h4>
+
+
 </div>
-
-
-
-<script>
-
-function showImage(event){
-
-document
-.getElementById(
-'preview'
-)
-
-.src=
-
-URL.createObjectURL(
-event.target.files[0]
-);
-
-}
-
-</script>
-
 
 
 </body>

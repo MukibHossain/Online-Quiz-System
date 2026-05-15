@@ -1,9 +1,26 @@
 <?php require '../config/database.php'; ?>
 
+
 <?php
 
 $quiz_id=
 $_GET['id'];
+
+
+$quiz=
+$conn->query(
+
+"SELECT * FROM quizzes
+
+WHERE id='$quiz_id'"
+
+)
+
+->fetch_assoc();
+
+
+$minutes=
+$quiz['time_limit'];
 
 
 $data=
@@ -23,25 +40,83 @@ WHERE quiz_id='$quiz_id'"
 
 <head>
 
+<title>Quiz Exam</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
 <style>
 
 body{
 
-background:#0f2027;
+background:url(
+'../assets/images/quiz-bg.png'
+);
 
-color:white;
+background-size:cover;
+
+background-position:center;
+
+min-height:100vh;
+
+font-family:Arial;
 
 }
 
-.quiz{
 
-background:#1f2937;
+.overlay{
 
-padding:30px;
+position:fixed;
 
-border-radius:20px;
+width:100%;
+
+height:100%;
+
+background:rgba(
+0,
+0,
+0,
+0.7
+);
+
+}
+
+
+.box{
+
+position:relative;
+
+z-index:5;
+
+background:rgba(
+255,
+255,
+255,
+0.08
+);
+
+backdrop-filter:blur(15px);
+
+padding:40px;
+
+border-radius:25px;
+
+margin-top:40px;
+
+color:white;
+
+box-shadow:0 0 30px black;
+
+}
+
+
+.timer{
+
+font-size:30px;
+
+font-weight:bold;
+
+color:yellow;
 
 }
 
@@ -53,20 +128,33 @@ border-radius:20px;
 <body>
 
 
-<div class="container mt-5">
+<div class="overlay"></div>
 
 
-<div class="quiz">
+<div class="container">
+
+
+<div class="box">
 
 
 <h1>
 
-📝 Quiz
+📝 Quiz Exam
 
 </h1>
 
 
-<a href="../index.php"
+<a
+href="quiz_list.php"
+class="btn btn-warning">
+
+← Back
+
+</a>
+
+
+<a
+href="../index.php"
 class="btn btn-info">
 
 🏠 Home
@@ -77,12 +165,25 @@ class="btn btn-info">
 <br><br>
 
 
-<form method="POST">
+<div
+id="timer"
+class="timer">
+
+</div>
+
+
+<br>
+
+
+<form
+method="POST"
+id="quizForm">
 
 
 <?php
 
 $i=1;
+
 
 while(
 $row=
@@ -108,7 +209,6 @@ value="<?= $row['option1'] ?>">
 
 <?= $row['option1'] ?>
 
-
 <br>
 
 
@@ -118,7 +218,6 @@ name="q<?= $row['id'] ?>"
 value="<?= $row['option2'] ?>">
 
 <?= $row['option2'] ?>
-
 
 <br>
 
@@ -130,7 +229,6 @@ value="<?= $row['option3'] ?>">
 
 <?= $row['option3'] ?>
 
-
 <br>
 
 
@@ -140,7 +238,6 @@ name="q<?= $row['id'] ?>"
 value="<?= $row['option4'] ?>">
 
 <?= $row['option4'] ?>
-
 
 <br><br>
 
@@ -278,6 +375,70 @@ header(
 
 
 </div>
+
+
+
+<script>
+
+let time=
+
+<?= $minutes ?>*60;
+
+
+
+setInterval(
+
+function(){
+
+let min=
+Math.floor(
+time/60
+);
+
+let sec=
+time%60;
+
+
+document
+.getElementById(
+'timer'
+)
+
+.innerHTML=
+
+"⏰ "
++min+
+":"
++String(sec)
+.padStart(
+2,
+'0'
+);
+
+
+if(
+time<=0
+){
+
+document
+.getElementById(
+'quizForm'
+)
+.submit();
+
+}
+
+
+time--;
+
+},
+
+1000
+
+);
+
+</script>
+
 
 
 </body>

@@ -7,16 +7,22 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+
 <style>
 
 body{
 
-background:linear-gradient(
-135deg,
-#0f2027,
-#203a43,
-#2c5364
+margin:0;
+
+background:url(
+'assets/images/hero-bg.png'
 );
+
+background-size:cover;
+
+background-position:center;
 
 height:100vh;
 
@@ -28,18 +34,38 @@ align-items:center;
 
 font-family:Arial;
 
-overflow:hidden;
+}
+
+
+.overlay{
+
+background:rgba(
+0,
+0,
+0,
+0.6
+);
+
+position:absolute;
+
+width:100%;
+
+height:100%;
 
 }
 
 
 .box{
 
+position:relative;
+
+z-index:5;
+
 background:rgba(
 255,
 255,
 255,
-0.1
+0.08
 );
 
 backdrop-filter:blur(15px);
@@ -52,32 +78,41 @@ text-align:center;
 
 color:white;
 
-box-shadow:0 0 40px black;
+box-shadow:0 0 50px black;
 
-width:700px;
-
-animation:fade 1.5s;
+animation:up 1.2s;
 
 }
 
 
-@keyframes fade{
+@keyframes up{
 
 from{
 
-transform:translateY(50px);
-
 opacity:0;
+
+transform:translateY(50px);
 
 }
 
 to{
 
-transform:translateY(0);
-
 opacity:1;
 
+transform:translateY(0);
+
 }
+
+}
+
+
+.btn{
+
+margin:8px;
+
+padding:14px 35px;
+
+font-size:18px;
 
 }
 
@@ -89,14 +124,22 @@ opacity:1;
 <body>
 
 
+<div class="overlay"></div>
+
+
 <div class="box">
 
 
 <h1>
 
-🎯 Online Quiz System
+<i class="fa fa-graduation-cap"></i>
+
+Online Quiz System
 
 </h1>
+
+
+<br>
 
 
 <h4>
@@ -106,12 +149,12 @@ Smart Learning Platform
 </h4>
 
 
-<br>
+<br><br>
 
 
 <a
 href="auth/login.php"
-class="btn btn-primary btn-lg">
+class="btn btn-primary">
 
 Login
 
@@ -120,7 +163,7 @@ Login
 
 <a
 href="auth/register.php"
-class="btn btn-success btn-lg">
+class="btn btn-success">
 
 Register
 
