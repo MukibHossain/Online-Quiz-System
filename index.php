@@ -12,7 +12,7 @@
 body{
 
 background:linear-gradient(
-45deg,
+135deg,
 #0f2027,
 #203a43,
 #2c5364
@@ -28,31 +28,56 @@ align-items:center;
 
 font-family:Arial;
 
+overflow:hidden;
+
 }
 
 
 .box{
 
-background:white;
+background:rgba(
+255,
+255,
+255,
+0.1
+);
 
-padding:50px;
+backdrop-filter:blur(15px);
 
-border-radius:20px;
+padding:60px;
+
+border-radius:30px;
 
 text-align:center;
 
-width:500px;
+color:white;
+
+box-shadow:0 0 40px black;
+
+width:700px;
+
+animation:fade 1.5s;
 
 }
 
 
-#loader{
+@keyframes fade{
 
-display:none;
+from{
 
-margin-top:20px;
+transform:translateY(50px);
 
-font-weight:bold;
+opacity:0;
+
+}
+
+to{
+
+transform:translateY(0);
+
+opacity:1;
+
+}
 
 }
 
@@ -74,66 +99,35 @@ font-weight:bold;
 </h1>
 
 
-<p>
+<h4>
 
-Test Your Knowledge
+Smart Learning Platform
 
-</p>
+</h4>
 
 
 <br>
 
 
-
 <a
-onclick="loading()"
 href="auth/login.php"
-class="btn btn-primary">
+class="btn btn-primary btn-lg">
 
 Login
 
 </a>
 
 
-
 <a
 href="auth/register.php"
-class="btn btn-success">
+class="btn btn-success btn-lg">
 
 Register
 
 </a>
 
 
-
-<div id="loader">
-
-Loading...
-
 </div>
-
-
-</div>
-
-
-
-
-<script>
-
-function loading(){
-
-document
-.getElementById(
-'loader'
-)
-
-.style.display=
-'block';
-
-}
-
-</script>
-
 
 
 </body>
