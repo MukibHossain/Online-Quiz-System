@@ -7,6 +7,126 @@ $quiz_id=
 $_GET['id'];
 
 
+if(isset($_POST['submit'])){
+
+
+$user_id=
+$_SESSION['user_id'];
+
+
+$check=
+$conn->query(
+
+"SELECT id FROM results
+
+WHERE
+
+user_id='$user_id'
+
+AND
+
+quiz_id='$quiz_id'"
+
+);
+
+
+if(
+$check->num_rows>0
+){
+
+echo
+"<script>
+
+alert('Already attempted');
+
+location='dashboard.php';
+
+</script>";
+
+exit();
+
+}
+
+
+
+$questions=
+$conn->query(
+
+"SELECT * FROM questions
+
+WHERE quiz_id='$quiz_id'"
+
+);
+
+
+$total=0;
+
+$score=0;
+
+
+
+while(
+$q=
+$questions->fetch_assoc()
+){
+
+$total++;
+
+
+$answer=
+
+$_POST[
+'q'.$q['id']
+]
+
+?? '';
+
+
+if(
+$answer==
+$q['correct_answer']
+){
+
+$score++;
+
+}
+
+}
+
+
+
+$conn->query(
+
+"INSERT INTO results(
+
+user_id,
+quiz_id,
+score,
+total
+
+)
+
+VALUES(
+
+'$user_id',
+'$quiz_id',
+'$score',
+'$total'
+
+)"
+
+);
+
+
+header(
+"Location: result.php"
+);
+
+exit();
+
+}
+
+
 $quiz=
 $conn->query(
 
@@ -144,7 +264,7 @@ color:yellow;
 </h1>
 
 
-<a
+
 href="quiz_list.php"
 class="btn btn-warning">
 
@@ -153,7 +273,7 @@ class="btn btn-warning">
 </a>
 
 
-<a
+
 href="../index.php"
 class="btn btn-info">
 
@@ -261,114 +381,6 @@ Submit Quiz
 
 
 </form>
-
-
-
-<?php
-
-if(isset($_POST['submit'])){
-
-
-$user_id=
-$_SESSION['user_id'];
-
-
-$questions=
-$conn->query(
-
-"SELECT * FROM questions
-
-WHERE quiz_id='$quiz_id'"
-
-);
-
-
-$total=0;
-
-$score=0;
-
-
-while(
-$q=
-$questions->fetch_assoc()
-){
-
-$total++;
-
-
-$answer=
-
-$_POST[
-'q'.$q['id']
-]
-
-?? '';
-
-
-if(
-$answer==
-$q['correct_answer']
-){
-
-$score++;
-
-}
-
-}
-
-
-
-$conn->query(
-
-"INSERT INTO results(
-
-user_id,
-quiz_id,
-score,
-total
-
-)
-
-VALUES(
-
-'$user_id',
-'$quiz_id',
-'$score',
-'$total'
-
-)"
-
-);
-
-
-
-$conn->query(
-
-"INSERT INTO leaderboard(
-
-name,
-score
-
-)
-
-VALUES(
-
-'".$_SESSION['user_name']."',
-'$score'
-
-)"
-
-);
-
-
-
-header(
-"Location: result.php"
-);
-
-}
-
-?>
 
 
 </div>
