@@ -264,22 +264,25 @@ color:yellow;
 </h1>
 
 
+<div class="mb-4">
 
-href="quiz_list.php"
-class="btn btn-warning">
+    
+    href="quiz_list.php"
+    class="btn btn-warning btn-lg me-2">
 
-← Back
+    ← Back
 
-</a>
+    </a>
 
+    
+    href="../index.php"
+    class="btn btn-info btn-lg">
 
+    🏠 Home
 
-href="../index.php"
-class="btn btn-info">
+    </a>
 
-🏠 Home
-
-</a>
+</div>
 
 
 <br><br>
