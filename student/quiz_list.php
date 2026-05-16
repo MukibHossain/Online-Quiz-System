@@ -1,42 +1,35 @@
-<?php require '../config/database.php'; ?>
+<?php
+
+session_start();
+
+require '../config/database.php';
+
+
+$data=
+$conn->query(
+
+"SELECT * FROM quizzes
+
+ORDER BY id DESC"
+
+);
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
 
+<title>Available Quiz</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-
-body{
-
-background:#0f2027;
-
-color:white;
-
-}
-
-
-.quiz{
-
-background:#1f2937;
-
-padding:25px;
-
-border-radius:20px;
-
-margin-bottom:20px;
-
-box-shadow:0 0 20px black;
-
-}
-
-</style>
 
 </head>
 
 
-<body>
+<body class="bg-dark text-white">
 
 
 <div class="container mt-5">
@@ -44,15 +37,25 @@ box-shadow:0 0 20px black;
 
 <h1>
 
-🚀 Available Quizzes
+📝 Available Quizzes
 
 </h1>
 
 
-<a href="dashboard.php"
-class="btn btn-info">
+<a
+href="dashboard.php"
+class="btn btn-warning">
 
 ← Back
+
+</a>
+
+
+<a
+href="../index.php"
+class="btn btn-info">
+
+🏠 Home
 
 </a>
 
@@ -61,37 +64,37 @@ class="btn btn-info">
 
 
 
+<div class="row">
+
+
 <?php
 
-$data=
-$conn->query(
-"SELECT * FROM quizzes"
-);
-
-
 while(
-$row=
+$quiz=
 $data->fetch_assoc()
 ){
 
 ?>
 
 
-<div class="quiz">
+<div class="col-md-4 mb-4">
 
 
-<h2>
+<div class="card bg-secondary text-white p-3">
 
-<?= $row['title'] ?>
 
-</h2>
+<h3>
+
+<?= $quiz['title'] ?>
+
+</h3>
 
 
 <p>
 
-⏰
+Time:
 
-<?= $row['time_limit'] ?>
+<?= $quiz['time_limit'] ?>
 
 minutes
 
@@ -99,9 +102,7 @@ minutes
 
 
 <a
-
-href="quiz_play.php?id=<?= $row['id'] ?>"
-
+href="quiz_play.php?id=<?= $quiz['id'] ?>"
 class="btn btn-success">
 
 Start Quiz
@@ -112,7 +113,13 @@ Start Quiz
 </div>
 
 
+</div>
+
+
 <?php } ?>
+
+
+</div>
 
 
 </div>
