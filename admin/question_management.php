@@ -1,4 +1,7 @@
-<?php require '../config/database.php'; ?>
+<?php 
+require '../config/database.php'; 
+$selected = $_GET['quiz'] ?? '';
+?>
 
 <!DOCTYPE html>
 <html>
@@ -79,7 +82,20 @@
 
             <form method="POST">
 
-                <input name="quiz_id" class="form-control" placeholder="Quiz ID">
+                <select name="quiz_id" class="form-control">
+
+                    <?php
+                    $quizzes = $conn->query("SELECT * FROM quizzes");
+                    while($q = $quizzes->fetch_assoc()){
+                    ?>
+
+                        <option value="<?= $q['id'] ?>" <?= $selected == $q['id'] ? 'selected' : '' ?>>
+                            <?= $q['title'] ?>
+                        </option>
+
+                    <?php } ?>
+
+                </select>
 
                 <br>
 

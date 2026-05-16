@@ -1,59 +1,75 @@
 <?php require '../config/database.php'; ?>
+
+
+<?php
+
+if(isset($_POST['saveQuiz'])){
+
+
+$conn->query(
+
+"INSERT INTO quizzes(
+
+title,
+time_limit
+
+)
+
+VALUES(
+
+'".$_POST['title']."',
+
+'".$_POST['time']."'
+
+)"
+
+);
+
+}
+
+
+if(isset($_GET['delete'])){
+
+
+$id=
+(int)
+$_GET['delete'];
+
+
+$conn->query(
+
+"DELETE FROM quizzes
+
+WHERE id='$id'"
+
+);
+
+
+header(
+"Location: quiz_management.php"
+);
+
+exit();
+
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
 
-<title>Quiz Management</title>
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-
-body{
-
-background:linear-gradient(
-45deg,
-#0f2027,
-#203a43,
-#2c5364
-);
-
-min-height:100vh;
-
-color:white;
-
-}
-
-.box{
-
-background:rgba(
-255,
-255,
-255,
-0.08
-);
-
-padding:30px;
-
-border-radius:20px;
-
-backdrop-filter:blur(10px);
-
-}
-
-</style>
 
 </head>
 
 
-<body>
+<body class="bg-dark text-white">
 
 
 <div class="container mt-5">
-
-
-<div class="box">
 
 
 <h1>
@@ -63,8 +79,9 @@ backdrop-filter:blur(10px);
 </h1>
 
 
-<a href="dashboard.php"
-class="btn btn-info">
+<a
+href="dashboard.php"
+class="btn btn-warning">
 
 ← Back
 
@@ -72,6 +89,7 @@ class="btn btn-info">
 
 
 <br><br>
+
 
 
 <form method="POST">
@@ -107,48 +125,7 @@ Save Quiz
 </form>
 
 
-
-<?php
-
-if(isset($_POST['saveQuiz'])){
-
-$title=$_POST['title'];
-
-$time=$_POST['time'];
-
-
-$conn->query(
-
-"INSERT INTO quizzes(
-title,
-time_limit
-)
-
-VALUES(
-'$title',
-'$time'
-)"
-
-);
-
-echo
-"<div class='alert alert-success mt-3'>
-Quiz Added
-</div>";
-
-}
-
-?>
-
-
 <hr>
-
-
-<h3>
-
-Saved Quizzes
-
-</h3>
 
 
 <table class="table table-dark">
@@ -160,17 +137,20 @@ Saved Quizzes
 
 <th>Quiz</th>
 
-<th>Time</th>
+<th>Questions</th>
+
+<th>Action</th>
 
 </tr>
-
 
 
 <?php
 
 $data=
 $conn->query(
+
 "SELECT * FROM quizzes"
+
 );
 
 
@@ -179,10 +159,25 @@ $row=
 $data->fetch_assoc()
 ){
 
+
+$count=
+$conn->query(
+
+"SELECT COUNT(*) total
+
+FROM questions
+
+WHERE quiz_id='".$row['id']."'"
+
+)
+
+->fetch_assoc();
+
 ?>
 
 
 <tr>
+
 
 <td>
 
@@ -200,9 +195,36 @@ $data->fetch_assoc()
 
 <td>
 
-<?= $row['time_limit'] ?>
+<?= $count['total'] ?>
+
+Questions
 
 </td>
+
+
+<td>
+
+
+<a
+href="question_management.php?quiz=<?= $row['id'] ?>"
+class="btn btn-primary btn-sm">
+
+Questions
+
+</a>
+
+
+<a
+href="?delete=<?= $row['id'] ?>"
+class="btn btn-danger btn-sm">
+
+Delete
+
+</a>
+
+
+</td>
+
 
 </tr>
 
@@ -211,9 +233,6 @@ $data->fetch_assoc()
 
 
 </table>
-
-
-</div>
 
 
 </div>
