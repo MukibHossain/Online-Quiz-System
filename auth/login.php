@@ -48,17 +48,69 @@ $data->fetch_assoc();
 
 
 
-if(
+$db_password=
+$user['password'];
+
+
+
+$valid=
 
 password_verify(
+$password,
+$db_password
+);
+
+
+
+if(
+!$valid
+){
+
+$valid=
+(
+$password==
+$db_password
+);
+
+}
+
+
+
+if(
+$valid
+){
+
+
+
+if(
+$password==
+$db_password
+){
+
+$new_hash=
+
+password_hash(
 
 $password,
 
-$user['password']
+PASSWORD_DEFAULT
 
-)
+);
 
-){
+
+
+$conn->query(
+
+"UPDATE users
+
+SET password='$new_hash'
+
+WHERE id='".$user['id']."'"
+
+);
+
+}
+
 
 
 $_SESSION['user_id']=
@@ -87,6 +139,7 @@ header(
 
 }
 
+
 exit();
 
 }
@@ -107,6 +160,7 @@ alert('Wrong password');
 
 ?>
 
+
 <!DOCTYPE html>
 <html>
 
@@ -116,6 +170,7 @@ alert('Wrong password');
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
+
 <style>
 
 body{
@@ -123,7 +178,9 @@ body{
 background:url('../assets/images/auth-bg.png');
 
 background-size:cover;
+
 background-position:center;
+
 min-height:100vh;
 
 }
@@ -134,6 +191,7 @@ min-height:100vh;
 position:fixed;
 
 width:100%;
+
 height:100%;
 
 background:
@@ -167,13 +225,20 @@ margin-top:70px;
 
 padding:40px;
 
-background:rgba(255,255,255,.10);
+background:rgba(
+255,
+255,
+255,
+.10
+);
 
 backdrop-filter:blur(14px);
 
 border-radius:25px;
 
 color:white;
+
+box-shadow:0 0 30px black;
 
 }
 
@@ -184,16 +249,32 @@ color:white;
 
 <body>
 
+
 <div class="overlay"></div>
 
+
 <div class="container">
+
 
 <div class="box">
 
 
-<a href="../index.php" class="btn btn-info">🏠 Home</a>
+<a
+href="../index.php"
+class="btn btn-info">
 
-<a href="javascript:history.back()" class="btn btn-warning">← Back</a>
+🏠 Home
+
+</a>
+
+
+<a
+href="javascript:history.back()"
+class="btn btn-warning">
+
+← Back
+
+</a>
 
 
 <br><br>
@@ -212,17 +293,28 @@ color:white;
 <form method="POST">
 
 
-<input name="email" class="form-control" placeholder="Email">
+<input
+name="email"
+class="form-control"
+placeholder="Email">
+
 
 <br>
 
 
-<input type="password" name="password" class="form-control" placeholder="Password">
+<input
+type="password"
+name="password"
+class="form-control"
+placeholder="Password">
+
 
 <br>
 
 
-<button name="login" class="btn btn-success w-100">
+<button
+name="login"
+class="btn btn-success w-100">
 
 Login
 
@@ -234,7 +326,9 @@ Login
 
 </div>
 
+
 </div>
+
 
 </body>
 </html>
