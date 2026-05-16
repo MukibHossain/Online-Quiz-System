@@ -1,4 +1,34 @@
-<?php require '../config/database.php'; ?>
+<?php
+
+session_start();
+
+require '../config/database.php';
+
+
+$data=
+$conn->query(
+
+"SELECT
+
+users.name,
+
+MAX(results.score) best_score
+
+FROM results
+
+JOIN users
+
+ON users.id=results.user_id
+
+GROUP BY results.user_id
+
+ORDER BY best_score DESC"
+
+);
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -24,8 +54,9 @@
 </h1>
 
 
-<a href="dashboard.php"
-class="btn btn-info">
+<a
+href="dashboard.php"
+class="btn btn-warning">
 
 ← Back
 
@@ -52,16 +83,7 @@ class="btn btn-info">
 
 <?php
 
-$data=
-$conn->query(
-
-"SELECT * FROM leaderboard
-ORDER BY score DESC"
-
-);
-
-
-$rank=1;
+$i=1;
 
 
 while(
@@ -74,9 +96,10 @@ $data->fetch_assoc()
 
 <tr>
 
+
 <td>
 
-<?= $rank++ ?>
+<?= $i++ ?>
 
 </td>
 
@@ -90,9 +113,10 @@ $data->fetch_assoc()
 
 <td>
 
-<?= $row['score'] ?>
+<?= $row['best_score'] ?>
 
 </td>
+
 
 </tr>
 
