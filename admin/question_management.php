@@ -58,6 +58,25 @@
 
             <br><br>
 
+            <?php
+            if(isset($_GET['delete'])){
+
+                $id= $_GET['delete'];
+
+                $conn->query(
+                    "DELETE FROM questions
+                    WHERE id='$id'"
+                );
+
+                header(
+                    "Location: question_management.php"
+                );
+
+                exit();
+
+            }
+            ?>
+
             <form method="POST">
 
                 <input name="quiz_id" class="form-control" placeholder="Quiz ID">
@@ -128,30 +147,32 @@
 
                 <tr>
                     <th>ID</th>
-                    <th>Quiz ID</th>
                     <th>Question</th>
-                    <th>Option 1</th>
-                    <th>Option 2</th>
-                    <th>Option 3</th>
-                    <th>Option 4</th>
-                    <th>Correct Answer</th>
+                    <th>Action</th>
                 </tr>
 
                 <?php
-                $list = $conn->query("SELECT * FROM questions");
+                $list= $conn->query(
+                    "SELECT * FROM questions"
+                );
 
-                while ($q = $list->fetch_assoc()) {
+                while($q= $list->fetch_assoc()){
                 ?>
 
                     <tr>
+
                         <td><?= $q['id'] ?></td>
-                        <td><?= $q['quiz_id'] ?></td>
+
                         <td><?= $q['question'] ?></td>
-                        <td><?= $q['option1'] ?></td>
-                        <td><?= $q['option2'] ?></td>
-                        <td><?= $q['option3'] ?></td>
-                        <td><?= $q['option4'] ?></td>
-                        <td><?= $q['correct_answer'] ?></td>
+
+                        <td>
+
+                            <a href="?delete=<?= $q['id'] ?>" class="btn btn-danger btn-sm">
+                                Delete
+                            </a>
+
+                        </td>
+
                     </tr>
 
                 <?php } ?>

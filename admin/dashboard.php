@@ -129,6 +129,13 @@ Quiz Management
 </a>
 
 
+<a href="question_management.php"
+class="btn btn-primary">
+
+Question Management
+
+</a>
+
 
 <a href="user_management.php"
 class="btn btn-warning">
