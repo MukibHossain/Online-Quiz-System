@@ -3,8 +3,23 @@
 
 <?php
 
+
+if(!isset($_SESSION['user_id'])){
+
+header("Location: ../auth/login.php");
+
+exit();
+
+}
+
+
+
 $quiz_id=
-$_GET['id'];
+(int)(
+$_GET['id']
+?? 0
+);
+
 
 
 if(isset($_POST['submit'])){
@@ -12,6 +27,7 @@ if(isset($_POST['submit'])){
 
 $user_id=
 $_SESSION['user_id'];
+
 
 
 $check=
@@ -28,6 +44,7 @@ AND
 quiz_id='$quiz_id'"
 
 );
+
 
 
 if(
@@ -59,6 +76,7 @@ WHERE quiz_id='$quiz_id'"
 );
 
 
+
 $total=0;
 
 $score=0;
@@ -73,6 +91,7 @@ $questions->fetch_assoc()
 $total++;
 
 
+
 $answer=
 
 $_POST[
@@ -80,6 +99,7 @@ $_POST[
 ]
 
 ?? '';
+
 
 
 if(
@@ -118,6 +138,7 @@ VALUES(
 );
 
 
+
 header(
 "Location: result.php"
 );
@@ -125,6 +146,7 @@ header(
 exit();
 
 }
+
 
 
 $quiz=
@@ -139,8 +161,13 @@ WHERE id='$quiz_id'"
 ->fetch_assoc();
 
 
+
 $minutes=
-$quiz['time_limit'];
+(int)(
+$quiz['time_limit']
+?? 10
+);
+
 
 
 $data=
@@ -196,7 +223,7 @@ background:rgba(
 0,
 0,
 0,
-0.7
+0.55
 );
 
 }
@@ -259,33 +286,40 @@ color:yellow;
 
 <h1>
 
-📝 Quiz Exam
+📝
+
+<?= htmlspecialchars(
+$quiz['title']
+?? 'Quiz Exam'
+) ?>
 
 </h1>
 
 
+
 <div class="mb-4">
 
-    
-    href="quiz_list.php"
-    class="btn btn-warning btn-lg me-2">
 
-    ← Back
+<a
+href="quiz_list.php"
+class="btn btn-warning btn-lg me-2">
 
-    </a>
+← Back
 
-    
-    href="../index.php"
-    class="btn btn-info btn-lg">
+</a>
 
-    🏠 Home
 
-    </a>
+<a
+href="../index.php"
+class="btn btn-info btn-lg">
+
+🏠 Home
+
+</a>
+
 
 </div>
 
-
-<br><br>
 
 
 <div
@@ -296,6 +330,7 @@ class="timer">
 
 
 <br>
+
 
 
 <form
@@ -316,13 +351,19 @@ $data->fetch_assoc()
 ?>
 
 
+<div class="mb-4">
+
+
 <h4>
 
 <?= $i ?>.
 
-<?= $row['question'] ?>
+<?= htmlspecialchars(
+$row['question']
+) ?>
 
 </h4>
+
 
 
 <input
@@ -332,7 +373,9 @@ value="<?= $row['option1'] ?>">
 
 <?= $row['option1'] ?>
 
+
 <br>
+
 
 
 <input
@@ -342,7 +385,9 @@ value="<?= $row['option2'] ?>">
 
 <?= $row['option2'] ?>
 
+
 <br>
+
 
 
 <input
@@ -352,7 +397,9 @@ value="<?= $row['option3'] ?>">
 
 <?= $row['option3'] ?>
 
+
 <br>
+
 
 
 <input
@@ -362,7 +409,8 @@ value="<?= $row['option4'] ?>">
 
 <?= $row['option4'] ?>
 
-<br><br>
+
+</div>
 
 
 <?php
@@ -374,9 +422,10 @@ $i++;
 ?>
 
 
+
 <button
 name="submit"
-class="btn btn-success">
+class="btn btn-success btn-lg">
 
 Submit Quiz
 
@@ -405,13 +454,18 @@ setInterval(
 
 function(){
 
+
 let min=
+
 Math.floor(
 time/60
 );
 
+
 let sec=
+
 time%60;
+
 
 
 document
@@ -422,13 +476,20 @@ document
 .innerHTML=
 
 "⏰ "
+
 +min+
+
 ":"
-+String(sec)
-.padStart(
+
++
+
+String(
+sec
+).padStart(
 2,
 '0'
 );
+
 
 
 if(
@@ -444,7 +505,9 @@ document
 }
 
 
+
 time--;
+
 
 },
 
