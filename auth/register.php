@@ -1,5 +1,99 @@
 <?php require '../config/database.php'; ?>
 
+
+<?php
+
+if(isset($_POST['register'])){
+
+
+$name=
+$conn->real_escape_string(
+$_POST['name']
+);
+
+
+$email=
+$conn->real_escape_string(
+$_POST['email']
+);
+
+
+$password=
+password_hash(
+$_POST['password'],
+PASSWORD_DEFAULT
+);
+
+
+$role=
+$_POST['role'];
+
+
+
+$check=
+$conn->query(
+
+"SELECT id FROM users
+
+WHERE email='$email'"
+
+);
+
+
+
+if(
+$check->num_rows>0
+){
+
+echo
+"<script>
+
+alert('Email already exists');
+
+</script>";
+
+}
+else{
+
+
+$conn->query(
+
+"INSERT INTO users(
+
+name,
+email,
+password,
+role
+
+)
+
+VALUES(
+
+'$name',
+'$email',
+'$password',
+'$role'
+
+)"
+
+);
+
+
+echo
+"<script>
+
+alert('Registration Success');
+
+location='login.php';
+
+</script>";
+
+}
+
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -12,18 +106,62 @@
 <style>
 
 body{
-background:#111;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+
+background:url('../assets/images/register-bg.png');
+
+background-size:cover;
+background-position:center;
+min-height:100vh;
+
 }
 
+
+.overlay{
+
+position:fixed;
+
+width:100%;
+height:100%;
+
+background:
+
+linear-gradient(
+
+45deg,
+
+rgba(30,41,59,.45),
+
+rgba(99,102,241,.30),
+
+rgba(168,85,247,.30)
+
+);
+
+}
+
+
 .box{
-background:white;
+
+position:relative;
+
+z-index:5;
+
+max-width:520px;
+
+margin:auto;
+
+margin-top:40px;
+
 padding:40px;
-border-radius:20px;
-width:400px;
+
+background:rgba(255,255,255,.10);
+
+backdrop-filter:blur(14px);
+
+border-radius:25px;
+
+color:white;
+
 }
 
 </style>
@@ -33,50 +171,64 @@ width:400px;
 
 <body>
 
+<div class="overlay"></div>
+
+<div class="container">
 
 <div class="box">
 
 
-<h2 class="text-center">
+<a href="../index.php" class="btn btn-info">🏠 Home</a>
 
-Register
+<a href="javascript:history.back()" class="btn btn-warning">← Back</a>
 
-</h2>
+
+<br><br>
+
+
+<h1 class="text-center">
+
+📝 Register
+
+</h1>
+
+
+<br>
 
 
 <form method="POST">
 
 
-<input
-name="name"
-class="form-control"
-placeholder="Full Name">
+<input name="name" class="form-control" placeholder="Full Name">
 
 <br>
 
 
-<input
-name="email"
-class="form-control"
-placeholder="Email">
+<input name="email" class="form-control" placeholder="Email">
 
 <br>
 
 
-<input
-type="password"
-name="password"
-class="form-control"
-placeholder="Password">
+<input type="password" name="password" class="form-control" placeholder="Password">
 
 <br>
 
 
-<button
-name="register"
-class="btn btn-success w-100">
+<select name="role" class="form-control">
 
-Register
+<option value="student">Student</option>
+
+<option value="admin">Admin</option>
+
+</select>
+
+
+<br>
+
+
+<button name="register" class="btn btn-success w-100">
+
+Create Account
 
 </button>
 
@@ -84,61 +236,9 @@ Register
 </form>
 
 
-
-<?php
-
-if(isset($_POST['register'])){
-
-$name=$_POST['name'];
-
-$email=$_POST['email'];
-
-$password=$_POST['password'];
-
-
-$conn->query(
-
-"INSERT INTO users(
-name,
-email,
-password,
-role
-)
-
-VALUES(
-
-'$name',
-'$email',
-'$password',
-'student'
-
-)"
-
-);
-
-
-echo
-"<div class='alert alert-success mt-3'>
-Registration Success 🎉
-</div>";
-
-}
-
-?>
-
-
-<br>
-
-
-<a href="login.php">
-
-← Back
-
-</a>
-
-
 </div>
 
+</div>
 
 </body>
 </html>

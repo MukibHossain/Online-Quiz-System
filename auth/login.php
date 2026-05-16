@@ -13,30 +13,75 @@
 
 body{
 
-background:#111;
+background:url('../assets/images/auth-bg.png');
 
-display:flex;
+background-size:cover;
+background-position:center;
+min-height:100vh;
 
-justify-content:center;
+}
 
-align-items:center;
 
-height:100vh;
+.overlay{
+
+position:fixed;
+
+width:100%;
+height:100%;
+
+background:
+
+linear-gradient(
+
+45deg,
+
+rgba(15,23,42,0.45),
+
+rgba(37,99,235,0.30),
+
+rgba(147,51,234,0.30)
+
+);
 
 }
 
 
 .box{
 
-background:white;
+position:relative;
+
+z-index:5;
+
+max-width:460px;
+
+margin:auto;
+
+margin-top:70px;
 
 padding:40px;
 
-border-radius:20px;
+background:rgba(
+255,
+255,
+255,
+0.10
+);
 
-width:400px;
+backdrop-filter:blur(14px);
 
-box-shadow:0 0 30px black;
+border-radius:25px;
+
+color:white;
+
+box-shadow:0 0 30px rgba(0,0,0,.5);
+
+}
+
+a{
+
+text-decoration:none;
+
+color:white;
 
 }
 
@@ -48,14 +93,47 @@ box-shadow:0 0 30px black;
 <body>
 
 
+<div class="overlay"></div>
+
+
+<div class="container">
+
+
 <div class="box">
 
 
-<h2 class="text-center">
+<div class="mb-3">
 
-Login
 
-</h2>
+<a
+href="../index.php"
+class="btn btn-info">
+
+🏠 Home
+
+</a>
+
+
+<a
+href="javascript:history.back()"
+class="btn btn-warning">
+
+← Back
+
+</a>
+
+
+</div>
+
+
+<h1 class="text-center">
+
+🔐 Login
+
+</h1>
+
+
+<br>
 
 
 <form method="POST">
@@ -82,7 +160,7 @@ placeholder="Password">
 
 <button
 name="login"
-class="btn btn-primary w-100">
+class="btn btn-success w-100">
 
 Login
 
@@ -92,6 +170,19 @@ Login
 <br><br>
 
 
+<div class="text-center">
+
+
+<a href="register.php">
+
+Create Account
+
+</a>
+
+
+<br>
+
+
 <a href="forgot_password.php">
 
 Forgot Password?
@@ -99,77 +190,13 @@ Forgot Password?
 </a>
 
 
+</div>
+
+
 </form>
 
 
-
-<?php
-
-if(isset($_POST['login'])){
-
-$email=$_POST['email'];
-
-$password=$_POST['password'];
-
-
-$q=
-$conn->query(
-
-"SELECT * FROM users
-
-WHERE email='$email'
-
-AND password='$password'"
-
-);
-
-
-$user=
-$q->fetch_assoc();
-
-
-if($user){
-
-$_SESSION['user_id']=$user['id'];
-
-$_SESSION['user_name']=$user['name'];
-
-$_SESSION['role']=$user['role'];
-
-
-if(
-$user['role']=='admin'
-){
-
-header(
-"Location: ../admin/dashboard.php"
-);
-
-}else{
-
-header(
-"Location: ../student/dashboard.php"
-);
-
-}
-
-exit();
-
-}
-
-}
-
-?>
-
-
-<br>
-
-
-<a href="../index.php">
-
-🏠 Home
-
-</a>
+</div>
 
 
 </div>
