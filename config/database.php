@@ -19,7 +19,7 @@ new mysqli(
 "localhost",
 "root",
 "",
-"online_quiz_system"
+"quiz_system_mukib"
 
 );
 
