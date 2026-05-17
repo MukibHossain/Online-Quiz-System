@@ -1,17 +1,144 @@
 <?php require '../config/database.php'; ?>
 <?php include '../includes/header.php'; ?>
 
+
+<?php
+
+
+$total_users=
+
+$conn
+->query(
+
+"SELECT COUNT(*) total
+
+FROM users
+
+WHERE role='student'"
+
+)
+
+->fetch_assoc()['total'];
+
+
+
+
+$total_quizzes=
+
+$conn
+->query(
+
+"SELECT COUNT(*) total
+
+FROM quizzes"
+
+)
+
+->fetch_assoc()['total'];
+
+
+
+
+$total_attempts=
+
+$conn
+->query(
+
+"SELECT COUNT(*) total
+
+FROM results"
+
+)
+
+->fetch_assoc()['total'];
+
+
+
+
+$report_status=
+
+$total_attempts > 0
+
+?
+
+"Ready"
+
+:
+
+"Empty";
+
+?>
+
+
 <style>
-body {
-    background: #0f172a;
-    min-height: 100vh;
+
+body{
+
+background:url(
+'../assets/images/admin-bg.png'
+);
+
+background-size:cover;
+
+background-position:center;
+
+min-height:100vh;
+
 }
+
+
+.overlay{
+
+position:fixed;
+
+width:100%;
+
+height:100%;
+
+background:rgba(
+0,
+0,
+0,
+0.65
+);
+
+}
+
+
+.box{
+
+position:relative;
+
+z-index:5;
+
+color:white;
+
+}
+
+
+.card{
+
+border:none;
+
+border-radius:20px;
+
+box-shadow:0 0 20px black;
+
+}
+
 </style>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-<div class="container mt-4 text-white">
+
+<div class="overlay"></div>
+
+
+
+<div class="container mt-4 box">
 
 
 <h1>
@@ -23,85 +150,154 @@ Admin Dashboard
 </h1>
 
 
-<a href="../auth/login.php"
+
+<a
+href="../index.php"
 class="btn btn-info mb-4">
 
-← Back
+🏠 Home
 
 </a>
+
+
 
 
 
 <div class="row">
 
 
-<div class="col-md-3">
+
+
+<div class="col-md-3 mb-3">
+
 
 <div class="card bg-primary text-white">
 
+
 <div class="card-body">
 
-<h4>Total Users</h4>
 
-<h2>245</h2>
+<h4>
+
+Total Users
+
+</h4>
+
+
+<h2>
+
+<?= $total_users ?>
+
+</h2>
+
 
 </div>
 
-</div>
 
 </div>
 
 
+</div>
 
-<div class="col-md-3">
+
+
+
+
+<div class="col-md-3 mb-3">
+
 
 <div class="card bg-success text-white">
 
+
 <div class="card-body">
 
-<h4>Quizzes</h4>
 
-<h2>35</h2>
+<h4>
+
+Quizzes
+
+</h4>
+
+
+<h2>
+
+<?= $total_quizzes ?>
+
+</h2>
+
 
 </div>
 
-</div>
 
 </div>
 
 
+</div>
 
-<div class="col-md-3">
+
+
+
+
+<div class="col-md-3 mb-3">
+
 
 <div class="card bg-warning text-dark">
 
+
 <div class="card-body">
 
-<h4>Attempts</h4>
 
-<h2>1280</h2>
+<h4>
+
+Attempts
+
+</h4>
+
+
+<h2>
+
+<?= $total_attempts ?>
+
+</h2>
+
 
 </div>
 
-</div>
 
 </div>
 
 
+</div>
 
-<div class="col-md-3">
+
+
+
+
+<div class="col-md-3 mb-3">
+
 
 <div class="card bg-danger text-white">
 
+
 <div class="card-body">
 
-<h4>Reports</h4>
 
-<h2>Ready</h2>
+<h4>
+
+Reports
+
+</h4>
+
+
+<h2>
+
+<?= $report_status ?>
+
+</h2>
+
 
 </div>
 
-</div>
 
 </div>
 
@@ -110,11 +306,14 @@ class="btn btn-info mb-4">
 
 
 
-<br><br>
+</div>
 
 
 
-<a href="quiz_management.php"
+
+
+<a
+href="quiz_management.php"
 class="btn btn-success">
 
 Quiz Management
@@ -122,7 +321,9 @@ Quiz Management
 </a>
 
 
-<a href="question_management.php"
+
+<a
+href="question_management.php"
 class="btn btn-primary">
 
 Question Management
@@ -130,7 +331,9 @@ Question Management
 </a>
 
 
-<a href="user_management.php"
+
+<a
+href="user_management.php"
 class="btn btn-warning">
 
 User Management
@@ -139,7 +342,8 @@ User Management
 
 
 
-<a href="reports.php"
+<a
+href="reports.php"
 class="btn btn-danger">
 
 Reports
@@ -148,14 +352,20 @@ Reports
 
 
 
+
+
 <br><br><br>
+
 
 
 
 <canvas id="myChart"></canvas>
 
 
+
 </div>
+
+
 
 
 
@@ -174,21 +384,25 @@ type:'bar',
 data:{
 
 labels:[
-'Jan',
-'Feb',
-'Mar',
-'Apr'
+
+'Users',
+'Quizzes',
+'Attempts'
+
 ],
 
 datasets:[{
 
-label:'Quiz Activity',
+label:'System Analytics',
 
 data:[
-20,
-45,
-70,
-90
+
+<?= $total_users ?>,
+
+<?= $total_quizzes ?>,
+
+<?= $total_attempts ?>
+
 ]
 
 }]
@@ -200,5 +414,7 @@ data:[
 );
 
 </script>
+
+
 
 <?php include '../includes/footer.php'; ?>
