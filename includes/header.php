@@ -33,10 +33,11 @@ font-size:28px;
 
 font-weight:bold;
 
+font-weight:bold;
+
 color:#00e5ff !important;
 
 }
-
 
 </style>
 
@@ -66,51 +67,88 @@ href="../index.php">
 <div>
 
 
-<a
-href="../student/dashboard.php"
-class="btn btn-primary me-2">
-
-<i class="fa fa-chart-line"></i>
-
-Dashboard
-
-</a>
+<?php if(isset($_SESSION['user_id'])){ ?>
 
 
-
-<a
-href="../student/profile.php"
-class="btn btn-warning me-2">
-
-<i class="fa fa-user"></i>
-
-Profile
-
-</a>
+    <?php if($_SESSION['role']=="admin"){ ?>
 
 
+        <a
+        href="../admin/dashboard.php"
+        class="btn btn-primary me-2">
 
-<a
-href="../auth/login.php"
-class="btn btn-success me-2">
+        <i class="fa fa-chart-line"></i>
 
-<i class="fa fa-lock"></i>
+        Dashboard
 
-Login
-
-</a>
-
+        </a>
 
 
-<a
-href="../auth/logout.php"
-class="btn btn-danger">
+    <?php } else { ?>
 
-<i class="fa fa-right-from-bracket"></i>
 
-Logout
+        <a
+        href="../student/dashboard.php"
+        class="btn btn-primary me-2">
 
-</a>
+        <i class="fa fa-chart-line"></i>
+
+        Dashboard
+
+        </a>
+
+
+        <a
+        href="../student/profile.php"
+        class="btn btn-warning me-2">
+
+        <i class="fa fa-user"></i>
+
+        Profile
+
+        </a>
+
+
+    <?php } ?>
+
+
+    <a
+    href="../auth/logout.php"
+    class="btn btn-danger">
+
+    <i class="fa fa-right-from-bracket"></i>
+
+    Logout
+
+    </a>
+
+
+<?php } else { ?>
+
+
+    <a
+    href="../auth/login.php"
+    class="btn btn-success me-2">
+
+    <i class="fa fa-lock"></i>
+
+    Login
+
+    </a>
+
+
+    <a
+    href="../auth/register.php"
+    class="btn btn-info">
+
+    <i class="fa fa-user-plus"></i>
+
+    Register
+
+    </a>
+
+
+<?php } ?>
 
 
 </div>

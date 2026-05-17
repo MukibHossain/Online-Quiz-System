@@ -18,7 +18,7 @@ Learn • Compete • Achieve
 
 <p>
 
-© 2026 Mukib Quiz System
+© 2026 Online Quiz System
 
 </p>
 
