@@ -3,8 +3,10 @@
 
 <?php
 
+
 $user_id=
 $_SESSION['user_id'];
+
 
 
 $user=
@@ -17,6 +19,24 @@ WHERE id='$user_id'"
 )
 
 ->fetch_assoc();
+
+
+
+$user['phone']=
+$user['phone']
+?? '';
+
+
+
+$user['university']=
+$user['university']
+?? '';
+
+
+
+$user['photo']=
+$user['photo']
+?? '';
 
 
 
@@ -37,30 +57,43 @@ $user['photo'];
 
 
 if(
+
 isset($_FILES['photo'])
+
 &&
+
 $_FILES['photo']['error']==0
+
 ){
+
 
 $uploadDir=
 
-dirname(__DIR__).
-"/uploads/";
+dirname(__DIR__)
+
+."/uploads/";
+
 
 
 $fileName=
 
-time().
-"_".
-basename(
+time()
+
+."_"
+
+.basename(
+
 $_FILES['photo']['name']
+
 );
+
 
 
 $targetFile=
 
-$uploadDir.
-$fileName;
+$uploadDir
+
+.$fileName;
 
 
 
@@ -102,6 +135,7 @@ WHERE id='$user_id'"
 );
 
 
+
 header(
 "Location: profile.php"
 );
@@ -121,8 +155,9 @@ $user['photo']
 
 ?
 
-"../uploads/".
-$user['photo']
+"../uploads/"
+
+.$user['photo']
 
 :
 
@@ -158,9 +193,18 @@ $user['photo']
 
 <a
 href="dashboard.php"
-class="btn btn-warning">
+class="btn btn-warning btn-lg me-2">
 
 ← Back
+
+</a>
+
+
+<a
+href="../index.php"
+class="btn btn-info btn-lg">
+
+🏠 Home
 
 </a>
 
@@ -205,7 +249,7 @@ class="form-control">
 
 <input
 name="phone"
-value="<?= $user['phone'] ?>"
+value="<?= htmlspecialchars($user['phone']) ?>"
 class="form-control"
 placeholder="Phone">
 
@@ -215,7 +259,7 @@ placeholder="Phone">
 
 <input
 name="university"
-value="<?= $user['university'] ?>"
+value="<?= htmlspecialchars($user['university']) ?>"
 class="form-control"
 placeholder="University">
 
@@ -242,7 +286,7 @@ Save Profile
 
 Name:
 
-<?= $user['name'] ?>
+<?= htmlspecialchars($user['name']) ?>
 
 </h4>
 
@@ -251,7 +295,7 @@ Name:
 
 Email:
 
-<?= $user['email'] ?>
+<?= htmlspecialchars($user['email']) ?>
 
 </h4>
 
@@ -260,7 +304,7 @@ Email:
 
 Phone:
 
-<?= $user['phone'] ?>
+<?= htmlspecialchars($user['phone']) ?>
 
 </h4>
 
@@ -269,7 +313,7 @@ Phone:
 
 University:
 
-<?= $user['university'] ?>
+<?= htmlspecialchars($user['university']) ?>
 
 </h4>
 
