@@ -1,5 +1,5 @@
 <?php require '../config/database.php'; ?>
-
+<?php include '../includes/header.php'; ?>
 
 <?php
 
@@ -161,16 +161,6 @@ alert('Wrong password');
 ?>
 
 
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>Login</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
 <style>
 
 body{
@@ -243,11 +233,6 @@ box-shadow:0 0 30px black;
 }
 
 </style>
-
-</head>
-
-
-<body>
 
 
 <div class="overlay"></div>
@@ -329,6 +314,4 @@ Login
 
 </div>
 
-
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>
