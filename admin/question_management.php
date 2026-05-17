@@ -1,203 +1,188 @@
-<?php 
-require '../config/database.php'; 
-$selected = $_GET['quiz'] ?? '';
-?>
+<?php require '../config/database.php'; ?>
+<?php include '../includes/header.php'; ?>
+<?php $selected = $_GET['quiz'] ?? ''; ?>
 
-<!DOCTYPE html>
-<html>
+<style>
 
-<head>
+body {
+    background: url('../assets/images/admin-bg.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    font-family: Arial;
+}
 
-    <title>Question Management</title>
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+}
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+.box {
+    position: relative;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 25px;
+    margin-top: 40px;
+    color: white;
+    box-shadow: 0 0 30px black;
+}
 
-    <style>
+</style>
 
-        body {
-            background: url('../assets/images/admin-bg.png');
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-            font-family: Arial;
+<div class="overlay"></div>
+
+<div class="container">
+
+    <div class="box">
+
+        <h1>📝 Question Management</h1>
+
+        <a href="dashboard.php" class="btn btn-warning">← Back</a>
+
+        <a href="../index.php" class="btn btn-info">🏠 Home</a>
+
+        <br><br>
+
+        <?php
+        if(isset($_GET['delete'])){
+
+            $id= $_GET['delete'];
+
+            $conn->query(
+                "DELETE FROM questions
+                WHERE id='$id'"
+            );
+
+            header(
+                "Location: question_management.php"
+            );
+
+            exit();
+
         }
+        ?>
 
-        .overlay {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-        }
+        <form method="POST">
 
-        .box {
-            position: relative;
-            z-index: 5;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 25px;
-            margin-top: 40px;
-            color: white;
-            box-shadow: 0 0 30px black;
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-    <div class="overlay"></div>
-
-    <div class="container">
-
-        <div class="box">
-
-            <h1>📝 Question Management</h1>
-
-            <a href="dashboard.php" class="btn btn-warning">← Back</a>
-
-            <a href="../index.php" class="btn btn-info">🏠 Home</a>
-
-            <br><br>
-
-            <?php
-            if(isset($_GET['delete'])){
-
-                $id= $_GET['delete'];
-
-                $conn->query(
-                    "DELETE FROM questions
-                    WHERE id='$id'"
-                );
-
-                header(
-                    "Location: question_management.php"
-                );
-
-                exit();
-
-            }
-            ?>
-
-            <form method="POST">
-
-                <select name="quiz_id" class="form-control">
-
-                    <?php
-                    $quizzes = $conn->query("SELECT * FROM quizzes");
-                    while($q = $quizzes->fetch_assoc()){
-                    ?>
-
-                        <option value="<?= $q['id'] ?>" <?= $selected == $q['id'] ? 'selected' : '' ?>>
-                            <?= $q['title'] ?>
-                        </option>
-
-                    <?php } ?>
-
-                </select>
-
-                <br>
-
-                <textarea name="question" class="form-control" placeholder="Question"></textarea>
-
-                <br>
-
-                <input name="o1" class="form-control" placeholder="Option 1">
-
-                <br>
-
-                <input name="o2" class="form-control" placeholder="Option 2">
-
-                <br>
-
-                <input name="o3" class="form-control" placeholder="Option 3">
-
-                <br>
-
-                <input name="o4" class="form-control" placeholder="Option 4">
-
-                <br>
-
-                <input name="correct" class="form-control" placeholder="Correct Answer">
-
-                <br>
-
-                <button name="save" class="btn btn-success">Save Question</button>
-
-            </form>
-
-            <?php
-            if (isset($_POST['save'])) {
-
-                $conn->query(
-                    "INSERT INTO questions(
-                        quiz_id,
-                        question,
-                        option1,
-                        option2,
-                        option3,
-                        option4,
-                        correct_answer
-                    )
-                    VALUES(
-                        '" . $_POST['quiz_id'] . "',
-                        '" . $_POST['question'] . "',
-                        '" . $_POST['o1'] . "',
-                        '" . $_POST['o2'] . "',
-                        '" . $_POST['o3'] . "',
-                        '" . $_POST['o4'] . "',
-                        '" . $_POST['correct'] . "'
-                    )"
-                );
-
-                echo "<div class='alert alert-success mt-3'>Question Saved Successfully 🎉</div>";
-            }
-            ?>
-
-            <hr>
-
-            <h3>Saved Questions</h3>
-
-            <table class="table table-dark">
-
-                <tr>
-                    <th>ID</th>
-                    <th>Question</th>
-                    <th>Action</th>
-                </tr>
+            <select name="quiz_id" class="form-control">
 
                 <?php
-                $list= $conn->query(
-                    "SELECT * FROM questions"
-                );
-
-                while($q= $list->fetch_assoc()){
+                $quizzes = $conn->query("SELECT * FROM quizzes");
+                while($q = $quizzes->fetch_assoc()){
                 ?>
 
-                    <tr>
-
-                        <td><?= $q['id'] ?></td>
-
-                        <td><?= $q['question'] ?></td>
-
-                        <td>
-
-                            <a href="?delete=<?= $q['id'] ?>" class="btn btn-danger btn-sm">
-                                Delete
-                            </a>
-
-                        </td>
-
-                    </tr>
+                    <option value="<?= $q['id'] ?>" <?= $selected == $q['id'] ? 'selected' : '' ?>>
+                        <?= $q['title'] ?>
+                    </option>
 
                 <?php } ?>
 
-            </table>
+            </select>
 
-        </div>
+            <br>
+
+            <textarea name="question" class="form-control" placeholder="Question"></textarea>
+
+            <br>
+
+            <input name="o1" class="form-control" placeholder="Option 1">
+
+            <br>
+
+            <input name="o2" class="form-control" placeholder="Option 2">
+
+            <br>
+
+            <input name="o3" class="form-control" placeholder="Option 3">
+
+            <br>
+
+            <input name="o4" class="form-control" placeholder="Option 4">
+
+            <br>
+
+            <input name="correct" class="form-control" placeholder="Correct Answer">
+
+            <br>
+
+            <button name="save" class="btn btn-success">Save Question</button>
+
+        </form>
+
+        <?php
+        if (isset($_POST['save'])) {
+
+            $conn->query(
+                "INSERT INTO questions(
+                    quiz_id,
+                    question,
+                    option1,
+                    option2,
+                    option3,
+                    option4,
+                    correct_answer
+                )
+                VALUES(
+                    '" . $_POST['quiz_id'] . "',
+                    '" . $_POST['question'] . "',
+                    '" . $_POST['o1'] . "',
+                    '" . $_POST['o2'] . "',
+                    '" . $_POST['o3'] . "',
+                    '" . $_POST['o4'] . "',
+                    '" . $_POST['correct'] . "'
+                )"
+            );
+
+            echo "<div class='alert alert-success mt-3'>Question Saved Successfully 🎉</div>";
+        }
+        ?>
+
+        <hr>
+
+        <h3>Saved Questions</h3>
+
+        <table class="table table-dark">
+
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Action</th>
+            </tr>
+
+            <?php
+            $list= $conn->query(
+                "SELECT * FROM questions"
+            );
+
+            while($q= $list->fetch_assoc()){
+            ?>
+
+                <tr>
+
+                    <td><?= $q['id'] ?></td>
+
+                    <td><?= $q['question'] ?></td>
+
+                    <td>
+
+                        <a href="?delete=<?= $q['id'] ?>" class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            <?php } ?>
+
+        </table>
 
     </div>
 
-</body>
-</html>
+</div>
+
+<?php include '../includes/footer.php'; ?>

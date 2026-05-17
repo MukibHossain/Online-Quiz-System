@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-<html>
+<?php require '../config/database.php'; ?>
+<?php include '../includes/header.php'; ?>
 
-<head>
-
-<title>Admin Dashboard</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+body {
+    background: #0f172a;
+    min-height: 100vh;
+}
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-</head>
 
-
-<body class="bg-dark text-white">
-
-
-<div class="container mt-4">
+<div class="container mt-4 text-white">
 
 
 <h1>
@@ -208,7 +201,4 @@ data:[
 
 </script>
 
-
-
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>

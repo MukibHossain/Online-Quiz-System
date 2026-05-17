@@ -1,5 +1,5 @@
 <?php require '../config/database.php'; ?>
-
+<?php include '../includes/header.php'; ?>
 
 <?php
 
@@ -94,15 +94,6 @@ location='login.php';
 
 ?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>Register</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <style>
 
 body{
@@ -165,11 +156,6 @@ color:white;
 }
 
 </style>
-
-</head>
-
-
-<body>
 
 <div class="overlay"></div>
 
@@ -240,5 +226,4 @@ Create Account
 
 </div>
 
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>

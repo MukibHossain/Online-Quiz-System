@@ -1,5 +1,5 @@
 <?php require '../config/database.php'; ?>
-
+<?php include '../includes/header.php'; ?>
 
 <?php
 
@@ -181,17 +181,6 @@ WHERE quiz_id='$quiz_id'"
 
 ?>
 
-
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>Quiz Exam</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
 <style>
 
 body{
@@ -268,11 +257,6 @@ color:yellow;
 }
 
 </style>
-
-</head>
-
-
-<body>
 
 
 <div class="overlay"></div>
@@ -517,7 +501,4 @@ time--;
 
 </script>
 
-
-
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>

@@ -1,7 +1,7 @@
+<?php require '../config/database.php'; ?>
+<?php include '../includes/header.php'; ?>
+
 <?php
-
-require '../config/database.php';
-
 
 if(
 !isset($_SESSION['user_name'])
@@ -12,17 +12,6 @@ $_SESSION['user_name']="Student";
 }
 
 ?>
-
-
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>Certificate</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
 
 <style>
 
@@ -56,11 +45,6 @@ box-shadow:0 0 30px gold;
 }
 
 </style>
-
-</head>
-
-
-<body>
 
 
 <div class="box">
@@ -126,6 +110,4 @@ class="btn btn-info">
 
 </div>
 
-
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>

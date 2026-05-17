@@ -1,9 +1,7 @@
+<?php require '../config/database.php'; ?>
+<?php include '../includes/header.php'; ?>
+
 <?php
-
-
-
-require '../config/database.php';
-
 
 if(!isset($_SESSION['user_id'])){
 
@@ -66,25 +64,16 @@ $total>0
 
 ?>
 
-
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>Result</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-</head>
+<style>
+body {
+    background: #0f172a;
+    min-height: 100vh;
+}
+</style>
 
-
-<body class="bg-dark text-white">
-
-
-<div class="container mt-5">
+<div class="container mt-5 text-white">
 
 
 <h1>
@@ -212,6 +201,4 @@ data:[
 
 </script>
 
-
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>

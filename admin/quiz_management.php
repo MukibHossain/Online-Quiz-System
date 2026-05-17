@@ -1,5 +1,5 @@
 <?php require '../config/database.php'; ?>
-
+<?php include '../includes/header.php'; ?>
 
 <?php
 
@@ -55,21 +55,14 @@ exit();
 
 ?>
 
+<style>
+body {
+    background: #0f172a;
+    min-height: 100vh;
+}
+</style>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-
-
-<body class="bg-dark text-white">
-
-
-<div class="container mt-5">
+<div class="container mt-5 text-white">
 
 
 <h1>
@@ -237,6 +230,4 @@ Delete
 
 </div>
 
-
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>

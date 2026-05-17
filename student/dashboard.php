@@ -1,5 +1,5 @@
 <?php require '../config/database.php'; ?>
-
+<?php include '../includes/header.php'; ?>
 
 <?php
 
@@ -73,19 +73,7 @@ $user['photo']
 
 ?>
 
-
-
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>Student Dashboard</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 
 <style>
 
@@ -148,11 +136,6 @@ color:white;
 }
 
 </style>
-
-</head>
-
-
-<body>
 
 
 <div class="overlay"></div>
@@ -386,7 +369,4 @@ data:[
 
 </script>
 
-
-
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>

@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html>
-
-<head>
+<?php require '../config/database.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body {
+    background: #0f172a;
+    min-height: 100vh;
+}
+</style>
 
-</head>
-
-
-<body class="bg-dark text-white">
-
-
-<div class="container mt-5">
+<div class="container mt-5 text-white">
 
 
 <h1>
@@ -36,6 +33,7 @@ class="btn btn-success">
 Download Excel
 
 </a>
+
 <br><br>
 
 
@@ -87,6 +85,4 @@ data:[
 
 </script>
 
-
-</body>
-</html>
+<?php include '../includes/footer.php'; ?>
