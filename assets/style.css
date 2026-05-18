@@ -6,10 +6,11 @@
 --white:#ffffff;
 
 --bg1:#ffffff;
-
 --bg2:#eff6ff;
 
 --text:#0f172a;
+
+--heading:#1e3a8a;
 
 --shadow:rgba(37,99,235,.15);
 
@@ -41,7 +42,7 @@ var(--bg2)
 
 );
 
-font-family:Arial;
+font-family:Arial,sans-serif;
 
 min-height:100vh;
 
@@ -51,6 +52,40 @@ color:var(--text);
 
 
 
+/* ALL TEXT */
+body,
+p,
+span,
+label,
+small,
+td,
+th,
+li,
+a{
+
+color:var(--text)!important;
+
+}
+
+
+
+/* HEADINGS */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+color:var(--heading)!important;
+
+font-weight:bold;
+
+}
+
+
+
+/* NAVBAR */
 .navbar{
 
 background:
@@ -75,11 +110,8 @@ var(--shadow);
 
 
 
+.navbar a,
 .navbar-brand{
-
-font-size:28px;
-
-font-weight:bold;
 
 color:white!important;
 
@@ -87,13 +119,9 @@ color:white!important;
 
 
 
-h1,
-h2,
-h3,
-h4,
-h5{
+.navbar-brand{
 
-color:var(--text);
+font-size:28px;
 
 font-weight:bold;
 
@@ -101,9 +129,12 @@ font-weight:bold;
 
 
 
+/* CARD */
 .card{
 
-background:white;
+background:white!important;
+
+color:var(--text)!important;
 
 border:none;
 
@@ -129,17 +160,7 @@ transform:translateY(-5px);
 
 
 
-.card h1,
-.card h2,
-.card h3,
-.card h4{
-
-color:var(--primary);
-
-}
-
-
-
+/* BUTTON */
 .btn{
 
 border:none;
@@ -178,11 +199,14 @@ transform:scale(1.05);
 
 
 
+/* GLASS */
 .glass{
 
 background:
 
-rgba(255,255,255,.85);
+rgba(255,255,255,.92);
+
+color:var(--text)!important;
 
 backdrop-filter:blur(20px);
 
@@ -198,9 +222,14 @@ var(--shadow);
 
 
 
+/* FORM */
 input,
 textarea,
 select{
+
+background:white!important;
+
+color:var(--text)!important;
 
 border:2px solid #bfdbfe!important;
 
@@ -228,9 +257,12 @@ rgba(37,99,235,.25)!important;
 
 
 
+/* TABLE */
 table{
 
 background:white!important;
+
+color:var(--text)!important;
 
 border-radius:20px;
 
@@ -250,6 +282,32 @@ color:white!important;
 
 
 
+/* QUIZ */
+.question{
+
+color:var(--text)!important;
+
+font-size:22px;
+
+font-weight:600;
+
+}
+
+
+
+.timer{
+
+color:var(--primary)!important;
+
+font-size:30px;
+
+font-weight:bold;
+
+}
+
+
+
+/* FOOTER */
 footer{
 
 background:
@@ -272,6 +330,7 @@ margin-top:40px;
 
 
 
+/* IMAGE */
 img{
 
 max-width:100%;

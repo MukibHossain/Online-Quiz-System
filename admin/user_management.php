@@ -1,32 +1,54 @@
 <?php require '../config/database.php'; ?>
 <?php include '../includes/header.php'; ?>
 
-<style>
-body {
-    background: #0f172a;
-    min-height: 100vh;
-}
-</style>
 
-<div class="container mt-5 text-white">
+<?php
+
+if(isset($_GET['delete'])){
+
+$id=$_GET['delete'];
+
+$conn->query(
+
+"DELETE FROM users
+WHERE id='$id'"
+
+);
+
+header(
+"Location:user_management.php"
+);
+
+exit();
+
+}
+
+?>
+
+
+<div class="container mt-5">
 
 
 <h1>
 
-User Management
+👥 User Management
 
 </h1>
 
 
-<a href="dashboard.php"
-class="btn btn-info">
 
-Back
+<a
+href="dashboard.php"
+class="btn btn-primary">
+
+← Back
 
 </a>
 
 
+
 <br><br>
+
 
 
 <input
@@ -38,12 +60,18 @@ placeholder="Search user...">
 <br>
 
 
+
+<div class="card p-4">
+
+
 <table
-class="table table-dark"
+class="table"
 id="myTable">
 
 
 <tr>
+
+<th>ID</th>
 
 <th>Name</th>
 
@@ -51,35 +79,89 @@ id="myTable">
 
 <th>Role</th>
 
+<th>Action</th>
+
 </tr>
+
+
+
+<?php
+
+$users=
+$conn->query(
+
+"SELECT * FROM users
+ORDER BY id"
+
+);
+
+
+while(
+$user=
+$users->fetch_assoc()
+){
+
+?>
 
 
 <tr>
 
-<td>Admin</td>
+<td>
 
-<td>admin@gmail.com</td>
+<?= $user['id'] ?>
 
-<td>Admin</td>
+</td>
+
+
+<td>
+
+<?= $user['name'] ?>
+
+</td>
+
+
+<td>
+
+<?= $user['email'] ?>
+
+</td>
+
+
+<td>
+
+<?= $user['role'] ?>
+
+</td>
+
+
+<td>
+
+<a
+href="?delete=<?= $user['id'] ?>"
+class="btn btn-primary">
+
+Delete
+
+</a>
+
+</td>
+
 
 </tr>
 
 
-<tr>
-
-<td>Student</td>
-
-<td>student@gmail.com</td>
-
-<td>Student</td>
-
-</tr>
+<?php } ?>
 
 
 </table>
 
 
 </div>
+
+
+</div>
+
+
 
 
 
@@ -108,7 +190,10 @@ document
 
 
 rows.forEach(
-row=>{
+(row,index)=>{
+
+if(index==0)return;
+
 
 row.style.display=
 
@@ -125,5 +210,7 @@ row.innerText
 });
 
 </script>
+
+
 
 <?php include '../includes/footer.php'; ?>

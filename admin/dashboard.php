@@ -7,8 +7,7 @@
 $total_users=
 $conn->query(
 "SELECT COUNT(*) total
-FROM users
-WHERE role='student'"
+FROM users"
 )->fetch_assoc()['total'];
 
 
@@ -34,7 +33,6 @@ $total_attempts > 0
 "Empty";
 
 ?>
-
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -75,17 +73,9 @@ class="btn btn-primary mb-4">
 
 <div class="card-body text-center">
 
-<h4>
+<h4>Total Users</h4>
 
-Total Users
-
-</h4>
-
-<h2>
-
-<?= $total_users ?>
-
-</h2>
+<h2><?= $total_users ?></h2>
 
 </div>
 
@@ -103,17 +93,9 @@ Total Users
 
 <div class="card-body text-center">
 
-<h4>
+<h4>Quizzes</h4>
 
-Quizzes
-
-</h4>
-
-<h2>
-
-<?= $total_quizzes ?>
-
-</h2>
+<h2><?= $total_quizzes ?></h2>
 
 </div>
 
@@ -131,17 +113,9 @@ Quizzes
 
 <div class="card-body text-center">
 
-<h4>
+<h4>Attempts</h4>
 
-Attempts
-
-</h4>
-
-<h2>
-
-<?= $total_attempts ?>
-
-</h2>
+<h2><?= $total_attempts ?></h2>
 
 </div>
 
@@ -159,17 +133,9 @@ Attempts
 
 <div class="card-body text-center">
 
-<h4>
+<h4>Reports</h4>
 
-Reports
-
-</h4>
-
-<h2>
-
-<?= $report_status ?>
-
-</h2>
+<h2><?= $report_status ?></h2>
 
 </div>
 
@@ -188,42 +154,23 @@ Reports
 <div class="mb-4">
 
 
-<a
-href="quiz_management.php"
-class="btn btn-primary">
-
+<a href="quiz_management.php" class="btn btn-primary">
 Quiz Management
-
 </a>
 
 
-
-<a
-href="question_management.php"
-class="btn btn-primary">
-
+<a href="question_management.php" class="btn btn-primary">
 Question Management
-
 </a>
 
 
-
-<a
-href="user_management.php"
-class="btn btn-primary">
-
+<a href="user_management.php" class="btn btn-primary">
 User Management
-
 </a>
 
 
-
-<a
-href="reports.php"
-class="btn btn-primary">
-
+<a href="reports.php" class="btn btn-primary">
 Reports
-
 </a>
 
 
@@ -238,7 +185,6 @@ Reports
 <canvas id="myChart"></canvas>
 
 </div>
-
 
 
 </div>
@@ -262,11 +208,9 @@ type:'bar',
 data:{
 
 labels:[
-
 'Users',
 'Quizzes',
 'Attempts'
-
 ],
 
 datasets:[{
@@ -276,9 +220,7 @@ label:'System Analytics',
 data:[
 
 <?= $total_users ?>,
-
 <?= $total_quizzes ?>,
-
 <?= $total_attempts ?>
 
 ]
