@@ -163,7 +163,7 @@ Login
 
 <a
 href="auth/register.php"
-class="btn btn-success">
+class="btn btn-primary">
 
 Register
 

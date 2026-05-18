@@ -92,7 +92,7 @@ minutes
 
 <a
 href="quiz_play.php?id=<?= $quiz['id'] ?>"
-class="btn btn-success">
+class="btn btn-primary">
 
 Start Quiz
 

@@ -109,7 +109,7 @@ body {
 
             <br>
 
-            <button name="save" class="btn btn-success">Save Question</button>
+            <button name="save" class="btn btn-primary">Save Question</button>
 
         </form>
 

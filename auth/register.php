@@ -212,7 +212,7 @@ color:white;
 <br>
 
 
-<button name="register" class="btn btn-success w-100">
+<button name="register" class="btn btn-primary w-100">
 
 Create Account
 

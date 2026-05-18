@@ -292,7 +292,7 @@ Highest Score
 
 <a
 href="quiz_list.php"
-class="btn btn-success">
+class="btn btn-primary">
 
 Start Quiz
 

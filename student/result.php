@@ -143,7 +143,7 @@ Score:
 
 <a
 href="certificate.php"
-class="btn btn-success">
+class="btn btn-primary">
 
 Certificate
 

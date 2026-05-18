@@ -171,7 +171,7 @@ class="btn btn-info mb-4">
 <div class="col-md-3 mb-3">
 
 
-<div class="card bg-primary text-white">
+<div class="card">
 
 
 <div class="card-body">
@@ -206,7 +206,7 @@ Total Users
 <div class="col-md-3 mb-3">
 
 
-<div class="card bg-success text-white">
+<div class="card">
 
 
 <div class="card-body">
@@ -241,7 +241,7 @@ Quizzes
 <div class="col-md-3 mb-3">
 
 
-<div class="card bg-warning text-dark">
+<div class="card">
 
 
 <div class="card-body">
@@ -276,7 +276,7 @@ Attempts
 <div class="col-md-3 mb-3">
 
 
-<div class="card bg-danger text-white">
+<div class="card">
 
 
 <div class="card-body">
@@ -314,7 +314,7 @@ Reports
 
 <a
 href="quiz_management.php"
-class="btn btn-success">
+class="btn btn-primary">
 
 Quiz Management
 

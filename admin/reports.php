@@ -28,7 +28,7 @@ Back
 </a>
 
 <a href="../exports/excel_export.php"
-class="btn btn-success">
+class="btn btn-primary">
 
 Download Excel
 

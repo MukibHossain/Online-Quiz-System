@@ -260,7 +260,7 @@ placeholder="University">
 
 <button
 name="save"
-class="btn btn-success">
+class="btn btn-primary">
 
 Save Profile
 

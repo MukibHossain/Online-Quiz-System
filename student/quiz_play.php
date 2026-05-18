@@ -409,7 +409,7 @@ $i++;
 
 <button
 name="submit"
-class="btn btn-success btn-lg">
+class="btn btn-primary btn-lg">
 
 Submit Quiz
 

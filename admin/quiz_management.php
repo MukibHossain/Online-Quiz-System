@@ -108,7 +108,7 @@ placeholder="Time">
 
 <button
 name="saveQuiz"
-class="btn btn-success">
+class="btn btn-primary">
 
 Save Quiz
 

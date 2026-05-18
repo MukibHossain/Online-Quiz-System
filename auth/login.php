@@ -299,7 +299,7 @@ placeholder="Password">
 
 <button
 name="login"
-class="btn btn-success w-100">
+class="btn btn-primary w-100">
 
 Login
 

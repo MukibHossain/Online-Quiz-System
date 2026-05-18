@@ -11,6 +11,8 @@ content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<link rel="stylesheet"
+href="../assets/style.css">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -128,7 +130,7 @@ href="../index.php">
 
     <a
     href="../auth/login.php"
-    class="btn btn-success me-2">
+    class="btn btn-primary me-2">
 
     <i class="fa fa-lock"></i>
 

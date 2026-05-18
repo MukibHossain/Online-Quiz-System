@@ -83,7 +83,7 @@ For Successful Participation
 
 <button
 onclick="window.print()"
-class="btn btn-success">
+class="btn btn-primary">
 
 Download
 
