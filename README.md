@@ -1,19 +1,46 @@
-# Online Quiz System
+# 🎯 Online Quiz System
 
-## Description
-This is an online quiz system built with PHP and MySQL.
+A modern role-based web application built with PHP, MySQL, Bootstrap, JavaScript, and Chart.js.
 
 ## Features
-- User login and registration
-- Multiple choice questions
-- Quiz result display
 
-## Technologies Used
+### Authentication
+- Student registration
+- Secure login
+- Password hashing
+- Session management
+
+### Admin Panel
+- Dashboard analytics
+- Create quizzes
+- Add questions
+- Manage users
+- Reports
+
+### Student Panel
+- Profile management
+- Quiz participation
+- Live timer
+- Automatic scoring
+- Leaderboard
+- Certificate generation
+
+### Technologies
 - PHP
 - MySQL
-- HTML, CSS, JavaScript
+- Bootstrap 5
+- JavaScript
+- Chart.js
 
-## How to Run
-1. Clone the repository
-2. Import the database
-3. Run on XAMPP localhost
+### Database
+- users
+- quizzes
+- questions
+- results
+- leaderboard
+
+### Theme
+White + Purple premium UI.
+
+### Author
+Mukib
