@@ -25,8 +25,8 @@ PASSWORD_DEFAULT
 );
 
 
-$role=
-$_POST['role'];
+/* ALWAYS STUDENT */
+$role='student';
 
 
 
@@ -164,9 +164,13 @@ color:white;
 <div class="box">
 
 
-<a href="../index.php" class="btn btn-info">🏠 Home</a>
+<a href="../index.php" class="btn btn-primary">
+🏠 Home
+</a>
 
-<a href="javascript:history.back()" class="btn btn-warning">← Back</a>
+<a href="javascript:history.back()" class="btn btn-primary">
+← Back
+</a>
 
 
 <br><br>
@@ -185,34 +189,38 @@ color:white;
 <form method="POST">
 
 
-<input name="name" class="form-control" placeholder="Full Name">
+<input
+name="name"
+class="form-control"
+placeholder="Full Name"
+required>
 
 <br>
 
 
-<input name="email" class="form-control" placeholder="Email">
+<input
+type="email"
+name="email"
+class="form-control"
+placeholder="Email"
+required>
 
 <br>
 
 
-<input type="password" name="password" class="form-control" placeholder="Password">
+<input
+type="password"
+name="password"
+class="form-control"
+placeholder="Password"
+required>
 
 <br>
 
 
-<select name="role" class="form-control">
-
-<option value="student">Student</option>
-
-<option value="admin">Admin</option>
-
-</select>
-
-
-<br>
-
-
-<button name="register" class="btn btn-primary w-100">
+<button
+name="register"
+class="btn btn-primary w-100">
 
 Create Account
 
