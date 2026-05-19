@@ -1,19 +1,20 @@
 <?php require '../config/database.php'; ?>
 <?php include '../includes/header.php'; ?>
 
+
 <?php
 
 if(isset($_POST['login'])){
 
 
 $email=
+trim(
 $conn->real_escape_string(
 $_POST['email']
-);
-
+));
 
 $password=
-$_POST['password'];
+trim($_POST['password']);
 
 
 
@@ -21,40 +22,25 @@ $data=
 $conn->query(
 
 "SELECT * FROM users
-
 WHERE email='$email'"
 
 );
 
 
 
-if(
-$data->num_rows==0
-){
-
-echo
-"<script>
-
-alert('User not found');
-
-</script>";
-
-}
-else{
+if($data->num_rows>0){
 
 
 $user=
 $data->fetch_assoc();
-
-
 
 $db_password=
 $user['password'];
 
 
 
+/* HASHED PASSWORD CHECK */
 $valid=
-
 password_verify(
 $password,
 $db_password
@@ -62,9 +48,8 @@ $db_password
 
 
 
-if(
-!$valid
-){
+/* PLAIN TEXT CHECK */
+if(!$valid){
 
 $valid=
 (
@@ -76,27 +61,21 @@ $db_password
 
 
 
-if(
-$valid
-){
+/* LOGIN SUCCESS */
+if($valid){
 
 
-
+/* AUTO HASH OLD PASSWORD */
 if(
 $password==
 $db_password
 ){
 
 $new_hash=
-
 password_hash(
-
 $password,
-
 PASSWORD_DEFAULT
-
 );
-
 
 
 $conn->query(
@@ -116,9 +95,11 @@ WHERE id='".$user['id']."'"
 $_SESSION['user_id']=
 $user['id'];
 
-
 $_SESSION['role']=
 $user['role'];
+
+$_SESSION['name']=
+$user['name'];
 
 
 
@@ -139,7 +120,6 @@ header(
 
 }
 
-
 exit();
 
 }
@@ -148,11 +128,21 @@ else{
 echo
 "<script>
 
-alert('Wrong password');
+alert('Wrong Password');
 
 </script>";
 
 }
+
+}
+else{
+
+echo
+"<script>
+
+alert('User Not Found');
+
+</script>";
 
 }
 
@@ -246,7 +236,7 @@ box-shadow:0 0 30px black;
 
 <a
 href="../index.php"
-class="btn btn-info">
+class="btn btn-primary">
 
 🏠 Home
 
@@ -255,7 +245,7 @@ class="btn btn-info">
 
 <a
 href="javascript:history.back()"
-class="btn btn-warning">
+class="btn btn-primary">
 
 ← Back
 
@@ -279,9 +269,11 @@ class="btn btn-warning">
 
 
 <input
+type="email"
 name="email"
 class="form-control"
-placeholder="Email">
+placeholder="Email"
+required>
 
 
 <br>
@@ -291,7 +283,8 @@ placeholder="Email">
 type="password"
 name="password"
 class="form-control"
-placeholder="Password">
+placeholder="Password"
+required>
 
 
 <br>
