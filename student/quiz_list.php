@@ -19,6 +19,15 @@ body {
     background: #0f172a;
     min-height: 100vh;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    color: white!important;
+}
 </style>
 
 <div class="container mt-5 text-white">
@@ -92,7 +101,7 @@ minutes
 
 <a
 href="quiz_play.php?id=<?= $quiz['id'] ?>"
-class="btn btn-primary">
+class="btn btn-success">
 
 Start Quiz
 
