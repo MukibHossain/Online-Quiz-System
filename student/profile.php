@@ -170,6 +170,10 @@ body {
     background: #0f172a;
     min-height: 100vh;
 }
+
+.profile-info h4{
+    color: white !important;
+}
 </style>
 
 <div class="container mt-5 text-white">
@@ -260,7 +264,7 @@ placeholder="University">
 
 <button
 name="save"
-class="btn btn-primary">
+class="btn btn-success">
 
 Save Profile
 
@@ -272,6 +276,8 @@ Save Profile
 
 <hr>
 
+
+<div class="profile-info">
 
 <h4>
 
@@ -307,6 +313,8 @@ University:
 <?= htmlspecialchars($user['university']) ?>
 
 </h4>
+
+</div>
 
 
 </div>
