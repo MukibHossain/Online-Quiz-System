@@ -38,7 +38,7 @@ online_quiz_system/
 ├── assets/
 │   ├── style.css               Global custom styles
 │   └── images/                 Background images for each page
-├── ajax/                       Folder reserved for AJAX handlers (currently empty)
+├── ajax/                       AJAX handler scripts
 ├── exports/
 │   └── excel_export.php        Export results to Excel (placeholder)
 └── uploads/                    Stores user profile photo uploads
@@ -67,8 +67,6 @@ Tables:
   questions     id, quiz_id, question, option1-4, correct_answer
   results       id, user_id, quiz_id, score, total, created_at
   leaderboard   id, user_id, quiz_id, score
-
-Note: Passwords in the sample data are plain text. In production, use PHP password_hash() before inserting and password_verify() on login.
 
 
 Installation
@@ -136,25 +134,15 @@ Student Panel
   - Download a certificate on passing a quiz
   - Edit profile: name, email, and upload a profile photo
 
-AJAX Folder
-  - The ajax/ directory exists but currently contains no files.
-  - It is reserved for future AJAX-based features such as
-    live question loading, real-time leaderboard updates,
-    or dynamic quiz progress saving without page reload.
-
 
 Known Limitations
 -----------------
 
-- Passwords in db.sql sample data are plain text. Hash them before deploying publicly.
 - No email functionality is implemented for forgot_password.php.
 - The Excel export in exports/excel_export.php is a placeholder and not fully implemented.
-- The ajax/ folder is empty; no AJAX features are active yet.
-- SQL queries use direct string interpolation which is vulnerable to SQL injection.
-  Prepared statements with mysqli or PDO should be used before going to production.
 
 
 Author
 ------
 
-Mukib
+MukibHossain [Github: https://github.com/MukibHossain]
