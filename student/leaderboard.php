@@ -257,6 +257,16 @@ font-size:24px;
 
 }
 
+
+/* STUDENT NAME */
+.student-name{
+
+color:#60a5fa!important;
+
+font-weight:bold;
+
+}
+
 </style>
 
 
@@ -423,7 +433,7 @@ class="user-img">
 
 <div>
 
-<strong>
+<strong class="student-name">
 
 <?= $row['name'] ?>
 
