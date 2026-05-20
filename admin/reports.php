@@ -8,6 +8,10 @@ body {
     background: #0f172a;
     min-height: 100vh;
 }
+
+h1{
+    color:white!important;
+}
 </style>
 
 <div class="container mt-5 text-white">
@@ -28,7 +32,7 @@ Back
 </a>
 
 <a href="../exports/excel_export.php"
-class="btn btn-primary">
+class="btn btn-success">
 
 Download Excel
 
