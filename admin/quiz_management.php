@@ -60,6 +60,14 @@ body {
     background: #0f172a;
     min-height: 100vh;
 }
+
+h1,h2,h3,h4,h5,h6{
+    color:white!important;
+}
+
+.table td{
+    color:white!important;
+}
 </style>
 
 <div class="container mt-5 text-white">
@@ -108,7 +116,7 @@ placeholder="Time">
 
 <button
 name="saveQuiz"
-class="btn btn-primary">
+class="btn btn-success">
 
 Save Quiz
 
@@ -179,14 +187,14 @@ WHERE quiz_id='".$row['id']."'"
 </td>
 
 
-<td>
+<td style="color:#60a5fa!important;">
 
 <?= $row['title'] ?>
 
 </td>
 
 
-<td>
+<td style="color:#60a5fa!important;">
 
 <?= $count['total'] ?>
 
