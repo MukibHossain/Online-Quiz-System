@@ -163,7 +163,8 @@ h1,h2,h3,h4,h5,h6{
 
             <?php
             $list= $conn->query(
-                "SELECT * FROM questions"
+                "SELECT * FROM questions
+                WHERE quiz_id='" . $selected . "'"
             );
 
             while($q= $list->fetch_assoc()){
