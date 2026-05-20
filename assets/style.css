@@ -423,3 +423,46 @@ color:black!important;
 ::placeholder{
 color:#666!important;
 }
+
+.white-text,
+.white-text h1,
+.white-text h2,
+.white-text h3,
+.white-text h4,
+.white-text h5,
+.white-text h6,
+.white-text p,
+.white-text span,
+.white-text label,
+.white-text a,
+.white-text td,
+.white-text th{
+
+color:white!important;
+
+}
+
+
+
+.footer-dark{
+
+background:
+
+linear-gradient(
+90deg,
+#2563eb,
+#1d4ed8
+)!important;
+
+color:white!important;
+
+}
+
+
+
+.footer-dark p,
+.footer-dark h5{
+
+color:white!important;
+
+}
