@@ -179,7 +179,7 @@ body {
 <div class="container mt-5 text-white">
 
 
-<h1>
+<h1 style="color:white!important;">
 
 👤 My Profile
 
