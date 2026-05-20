@@ -294,7 +294,6 @@ font-weight:600;
 }
 
 
-
 .timer{
 
 color:var(--primary)!important;
@@ -304,7 +303,6 @@ font-size:30px;
 font-weight:bold;
 
 }
-
 
 
 /* FOOTER */
@@ -328,11 +326,100 @@ margin-top:40px;
 
 }
 
-
-
 /* IMAGE */
 img{
 
 max-width:100%;
 
+}
+
+
+/* ========================
+   GLOBAL TEXT FIX
+   ======================== */
+
+body{
+color:white;
+}
+
+
+/* ALL HEADINGS */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+color:white!important;
+}
+
+
+/* NORMAL TEXT */
+
+p,
+span,
+label,
+small,
+td,
+th,
+li,
+a{
+color:white;
+}
+
+
+/* PROFILE TEXT */
+
+.profile-info,
+.profile-info h4{
+color:white!important;
+}
+
+
+/* DASHBOARD TITLES */
+
+.dashboard-title{
+color:white!important;
+}
+
+
+/* CARD TEXT */
+
+.card{
+color:white;
+}
+
+
+/* FOOTER */
+
+footer,
+footer p,
+footer span,
+footer a{
+color:white!important;
+}
+
+
+/* TABLE */
+
+table,
+.table{
+color:white!important;
+}
+
+
+/* FORM TEXT */
+
+input,
+textarea,
+select{
+color:black!important;
+}
+
+
+/* PLACEHOLDER */
+
+::placeholder{
+color:#666!important;
 }
