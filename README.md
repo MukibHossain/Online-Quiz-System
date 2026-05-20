@@ -7,6 +7,7 @@ A role-based web application for conducting online quizzes. Built with PHP and M
 Project Structure
 -----------------
 
+```plaintext
 online_quiz_system/
 │
 ├── index.php                          # Landing page (Login / Register buttons)
@@ -55,7 +56,7 @@ online_quiz_system/
 ├── uploads/                          # Uploaded profile photos
 │
 └── README.md                         # Project documentation
-
+```
 Tech Stack
 ----------
 
