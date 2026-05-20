@@ -31,6 +31,14 @@ body {
     box-shadow: 0 0 30px black;
 }
 
+h1,h2,h3,h4,h5,h6{
+    color: white!important;
+}
+
+.table td{
+    color: #60a5fa!important;
+}
+
 </style>
 
 <div class="overlay"></div>
@@ -109,7 +117,7 @@ body {
 
             <br>
 
-            <button name="save" class="btn btn-primary">Save Question</button>
+            <button name="save" class="btn btn-success">Save Question</button>
 
         </form>
 
