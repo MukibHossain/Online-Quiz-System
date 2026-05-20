@@ -3,306 +3,190 @@
 
 <?php
 
-// Quiz wise attempts
+// Total attempts
+$total_attempts =
+$conn->query(
+"SELECT COUNT(*) total FROM results"
+)->fetch_assoc()['total'];
 
-$quizData=
+
+// Average score
+$average_score =
+$conn->query(
+"SELECT AVG(score) avg_score FROM results"
+)->fetch_assoc()['avg_score'];
+
+$average_score = round($average_score ?? 0);
+
+
+// Highest scorer
+$topper =
 $conn->query(
 
-"SELECT
+"SELECT users.name, MAX(results.score) highest
+FROM results
+JOIN users
+ON users.id = results.user_id"
 
-quizzes.title,
+)->fetch_assoc();
 
-COUNT(results.id) total_attempts,
 
+// Quiz wise performance
+$quiz_data =
+$conn->query(
+
+"SELECT quizzes.title,
 AVG(results.score) avg_score
 
-FROM quizzes
+FROM results
 
-LEFT JOIN results
-ON quizzes.id=results.quiz_id
+JOIN quizzes
+ON quizzes.id = results.quiz_id
 
-GROUP BY quizzes.id"
+GROUP BY results.quiz_id"
 
 );
 
 
+$labels = [];
+$scores = [];
 
-$labels=[];
-$attempts=[];
-$averages=[];
+while($row = $quiz_data->fetch_assoc()){
 
-
-
-while(
-$row=
-$quizData->fetch_assoc()
-){
-
-$labels[]=
-$row['title'];
-
-$attempts[]=
-$row['total_attempts'];
-
-$averages[]=
-round(
-$row['avg_score']
-);
+    $labels[] = $row['title'];
+    $scores[] = round($row['avg_score']);
 
 }
 
 ?>
 
-
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
 
 <style>
 
 body{
 
-background:url(
-'../assets/images/admin-bg.png'
-);
-
-background-size:cover;
-
-background-position:center;
+background:#0f172a;
 
 min-height:100vh;
 
 }
 
+.report-title{
+color:white!important;
+font-weight:bold;
+}
 
-.overlay{
+.report-card{
 
-position:fixed;
+background:white;
 
-width:100%;
+border-radius:20px;
+
+padding:25px;
+
+text-align:center;
+
+box-shadow:0 0 20px rgba(0,0,0,.2);
 
 height:100%;
 
-background:rgba(
-0,
-0,
-0,
-0.72
-);
-
 }
 
-
-.box{
-
-position:relative;
-
-z-index:5;
-
-background:rgba(
-255,
-255,
-255,
-0.08
-);
-
-backdrop-filter:blur(16px);
-
-padding:35px;
-
-border-radius:30px;
-
-margin-top:40px;
-
-color:white;
-
-box-shadow:0 0 30px rgba(37,99,235,.35);
-
-}
-
-
-h1{
-
-color:white!important;
-
+.report-card h3{
+color:#2563eb;
 font-weight:bold;
-
-margin-bottom:25px;
-
 }
 
+.report-card h2{
+font-weight:bold;
+color:#0f172a;
+}
 
 .chart-box{
 
 background:white;
 
-padding:20px;
+padding:30px;
 
 border-radius:20px;
 
-}
-
-
-.stats-card{
-
-background:rgba(
-255,
-255,
-255,
-0.12
-);
-
-padding:25px;
-
-border-radius:20px;
-
-text-align:center;
-
-margin-bottom:20px;
-
-}
-
-
-.stats-card h2{
-
-color:white!important;
-
-font-size:38px;
-
-}
-
-
-.stats-card p{
-
-color:#cbd5e1!important;
-
-font-size:17px;
-
-margin-top:5px;
+box-shadow:0 0 20px rgba(0,0,0,.2);
 
 }
 
 </style>
 
+<div class="container mt-5">
 
-
-<div class="overlay"></div>
-
-
-
-<div class="container">
-
-
-
-<div class="box">
-
-
-
-<h1>
+<h1 class="report-title">
 
 📊 Reports & Analytics
 
 </h1>
 
+<br>
 
-
-<a
-href="dashboard.php"
+<a href="dashboard.php"
 class="btn btn-primary">
 
 ← Back
 
 </a>
 
-
-
-<a
-href="../exports/excel_export.php"
-class="btn btn-primary">
-
-📥 Download Excel
-
-</a>
-
-
-
 <br><br>
-
-
 
 <div class="row">
 
+<div class="col-md-4 mb-4">
 
+<div class="report-card">
 
-<div class="col-md-4">
-
-<div class="stats-card">
+<h3>Total Attempts</h3>
 
 <h2>
 
-<?= array_sum($attempts) ?>
+<?= $total_attempts ?>
 
 </h2>
 
-<p>
-
-Total Attempts
-
-</p>
-
 </div>
 
 </div>
 
+<div class="col-md-4 mb-4">
 
+<div class="report-card">
 
-<div class="col-md-4">
-
-<div class="stats-card">
+<h3>Average Performance</h3>
 
 <h2>
 
-<?= count($labels) ?>
-
-</h2>
-
-<p>
-
-Total Quizzes
-
-</p>
-
-</div>
-
-</div>
-
-
-
-<div class="col-md-4">
-
-<div class="stats-card">
-
-<h2>
-
-<?= count($averages)>0 ? round(array_sum($averages)/count($averages)) : 0 ?>
+<?= $average_score ?>
 
 %</h2>
 
-<p>
+</div>
 
-Average Performance
+</div>
 
-</p>
+<div class="col-md-4 mb-4">
+
+<div class="report-card">
+
+<h3>Top Scorer</h3>
+
+<h2>
+
+<?= $topper['name'] ?? 'N/A' ?>
+
+</h2>
 
 </div>
 
 </div>
 
-
-
 </div>
-
 
 
 <div class="chart-box">
@@ -311,15 +195,7 @@ Average Performance
 
 </div>
 
-
-
 </div>
-
-
-
-</div>
-
-
 
 <script>
 
@@ -339,33 +215,17 @@ labels:
 
 <?= json_encode($labels) ?>,
 
-datasets:[
+datasets:[{
 
-{
-
-label:'Attempts',
+label:'Average Quiz Score',
 
 data:
 
-<?= json_encode($attempts) ?>,
+<?= json_encode($scores) ?>,
 
-backgroundColor:'#2563eb'
+borderWidth:2
 
-},
-
-{
-
-label:'Average Score',
-
-data:
-
-<?= json_encode($averages) ?>,
-
-backgroundColor:'#60a5fa'
-
-}
-
-]
+}]
 
 },
 
@@ -378,9 +238,7 @@ plugins:{
 legend:{
 
 labels:{
-
 color:'#0f172a'
-
 }
 
 }
@@ -389,24 +247,20 @@ color:'#0f172a'
 
 scales:{
 
+x:{
+
+ticks:{
+color:'#0f172a'
+}
+
+},
+
 y:{
 
 beginAtZero:true,
 
 ticks:{
-
 color:'#0f172a'
-
-}
-
-},
-
-x:{
-
-ticks:{
-
-color:'#0f172a'
-
 }
 
 }
@@ -420,7 +274,5 @@ color:'#0f172a'
 );
 
 </script>
-
-
 
 <?php include '../includes/footer.php'; ?>
