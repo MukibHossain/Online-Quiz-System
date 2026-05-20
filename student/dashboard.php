@@ -11,7 +11,6 @@ $user=
 $conn->query(
 
 "SELECT * FROM users
-
 WHERE id='$user_id'"
 
 )
@@ -24,11 +23,8 @@ $stats=
 $conn->query(
 
 "SELECT
-
 COUNT(*) total,
-
 AVG(score) average_score,
-
 MAX(score) highest
 
 FROM results
@@ -104,7 +100,7 @@ background:rgba(
 0,
 0,
 0,
-0.75
+0.72
 );
 
 }
@@ -123,15 +119,98 @@ background:rgba(
 0.08
 );
 
-backdrop-filter:blur(15px);
+backdrop-filter:blur(16px);
 
-padding:30px;
+padding:35px;
 
-border-radius:25px;
+border-radius:30px;
 
 margin-top:40px;
 
 color:white;
+
+box-shadow:0 0 30px rgba(37,99,235,.35);
+
+}
+
+
+.stat-card{
+
+background:rgba(
+255,
+255,
+255,
+0.12
+);
+
+padding:25px;
+
+border-radius:22px;
+
+text-align:center;
+
+color:white;
+
+backdrop-filter:blur(12px);
+
+transition:.3s;
+
+height:100%;
+
+border:1px solid rgba(255,255,255,.15);
+
+}
+
+
+.stat-card:hover{
+
+transform:translateY(-5px);
+
+box-shadow:0 0 25px rgba(37,99,235,.45);
+
+}
+
+
+.stat-card h2,
+.stat-card h4{
+
+color:white!important;
+
+}
+
+
+.dashboard-title{
+
+color:white!important;
+
+font-weight:bold;
+
+}
+
+
+.chart-box{
+
+background:rgba(
+255,
+255,
+255,
+0.08
+);
+
+padding:20px;
+
+border-radius:20px;
+
+}
+
+
+.user-name{
+
+color:white;
+
+font-weight:bold;
+
+margin-top:15px;
 
 }
 
@@ -147,7 +226,7 @@ color:white;
 <div class="box">
 
 
-<h1>
+<h1 class="dashboard-title">
 
 🎓 Student Dashboard
 
@@ -156,7 +235,7 @@ color:white;
 
 <a
 href="../index.php"
-class="btn btn-info">
+class="btn btn-primary">
 
 🏠 Home
 
@@ -164,8 +243,8 @@ class="btn btn-info">
 
 
 <a
-href="../auth/login.php"
-class="btn btn-danger">
+href="../auth/logout.php"
+class="btn btn-primary">
 
 Logout
 
@@ -192,23 +271,23 @@ border:4px solid white;
 ">
 
 
-<h2>
+<h2 class="user-name">
 
 <?= $user['name'] ?>
 
 </h2>
 
 
-<hr>
+<hr style="color:white;">
 
 
 
-<div class="row">
+<div class="row g-4">
 
 
 <div class="col-md-4">
 
-<div class="card bg-primary text-white p-3">
+<div class="stat-card">
 
 <h4>
 
@@ -231,7 +310,7 @@ Total Quizzes
 
 <div class="col-md-4">
 
-<div class="card bg-success text-white p-3">
+<div class="stat-card">
 
 <h4>
 
@@ -254,7 +333,7 @@ Average Score
 
 <div class="col-md-4">
 
-<div class="card bg-warning text-dark p-3">
+<div class="stat-card">
 
 <h4>
 
@@ -282,7 +361,11 @@ Highest Score
 
 
 
+<div class="chart-box">
+
 <canvas id="chart"></canvas>
+
+</div>
 
 
 
@@ -301,7 +384,7 @@ Start Quiz
 
 <a
 href="leaderboard.php"
-class="btn btn-warning">
+class="btn btn-primary">
 
 Leaderboard
 
@@ -348,6 +431,8 @@ labels:[
 ],
 
 datasets:[{
+
+label:'Performance',
 
 data:[
 
