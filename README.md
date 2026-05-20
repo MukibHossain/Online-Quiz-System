@@ -8,41 +8,53 @@ Project Structure
 -----------------
 
 online_quiz_system/
-├── index.php                   Landing page (Login / Register buttons)
+│
+├── index.php                          # Landing page (Login / Register buttons)
+│
 ├── config/
-│   └── database.php            Database connection and session start
+│   └── database.php                  # Database connection + session start
+│
 ├── database/
-│   └── db.sql                  Full schema with sample data
+│   └── db.sql                        # Full database schema + sample data
+│
 ├── auth/
-│   ├── login.php               Login form with role-based redirect
-│   ├── register.php            Student self-registration
-│   ├── logout.php              Session destroy and redirect
-│   └── forgot_password.php     Password reset placeholder
+│   ├── login.php                     # User login with role-based redirect
+│   ├── register.php                  # Student registration
+│   ├── logout.php                    # Logout and session destroy
+│   └── forgot_password.php           # Password reset placeholder
+│
 ├── admin/
-│   ├── dashboard.php           Analytics overview with Chart.js
-│   ├── quiz_management.php     Create and delete quizzes
-│   ├── question_management.php Add and delete quiz questions
-│   ├── user_management.php     View all registered users
-│   └── reports.php             Result reports per quiz
+│   ├── dashboard.php                 # Admin analytics dashboard (Chart.js)
+│   ├── quiz_management.php           # Create / delete quizzes
+│   ├── question_management.php       # Add / remove quiz questions
+│   ├── user_management.php           # View all registered users
+│   └── reports.php                   # Quiz result reports
+│
 ├── student/
-│   ├── dashboard.php           Student home with stats
-│   ├── quiz_list.php           Browse available quizzes
-│   ├── quiz_play.php           Take a quiz with countdown timer
-│   ├── result.php              View latest result after submission
-│   ├── leaderboard.php         Top scores across all quizzes
-│   ├── certificate.php         Downloadable certificate on pass
-│   └── profile.php             Edit name, email, and profile photo
+│   ├── dashboard.php                 # Student dashboard with stats
+│   ├── quiz_list.php                 # Browse available quizzes
+│   ├── quiz_play.php                 # Attempt quiz with countdown timer
+│   ├── result.php                    # Show quiz result after submission
+│   ├── leaderboard.php               # Top scores leaderboard
+│   ├── certificate.php               # Download certificate after passing
+│   └── profile.php                   # Edit profile + upload photo
+│
 ├── includes/
-│   ├── header.php              Shared navbar with role-aware links
-│   └── footer.php              Shared footer
+│   ├── header.php                    # Shared navbar / header
+│   └── footer.php                    # Shared footer
+│
 ├── assets/
-│   ├── style.css               Global custom styles
-│   └── images/                 Background images for each page
-├── ajax/                       AJAX handler scripts
+│   ├── style.css                     # Global CSS styles
+│   └── images/                       # Backgrounds and static images
+│
+├── ajax/                             # AJAX request handler scripts
+│
 ├── exports/
-│   └── excel_export.php        Export results to Excel (placeholder)
-└── uploads/                    Stores user profile photo uploads
-
+│   └── excel_export.php              # Export results to Excel
+│
+├── uploads/                          # Uploaded profile photos
+│
+└── README.md                         # Project documentation
 
 Tech Stack
 ----------
