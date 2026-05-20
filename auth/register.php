@@ -155,6 +155,10 @@ color:white;
 
 }
 
+h1{
+color:white!important;
+}
+
 </style>
 
 <div class="overlay"></div>
