@@ -7,7 +7,6 @@ A role-based web application for conducting online quizzes. Built with PHP and M
 Project Structure
 -----------------
 
-```plaintext
 online_quiz_system/
 │
 ├── index.php                          # Landing page (Login / Register buttons)
@@ -75,12 +74,43 @@ Database name: quiz_system_mukib
 
 Tables:
 
-  users         id, name, email, password, role (admin/student), photo
-  quizzes       id, title, time_limit (in minutes)
-  questions     id, quiz_id, question, option1-4, correct_answer
-  results       id, user_id, quiz_id, score, total, created_at
-  leaderboard   id, user_id, quiz_id, score
+users
+├── id
+├── name
+├── email
+├── password
+├── role              # admin / student
+└── photo
 
+quizzes
+├── id
+├── title
+└── time_limit        # in minutes
+
+questions
+├── id
+├── quiz_id
+├── question
+├── option1
+├── option2
+├── option3
+├── option4
+└── correct_answer
+
+results
+├── id
+├── user_id
+├── quiz_id
+├── score
+├── total
+└── created_at
+
+leaderboard
+├── id
+├── user_id
+├── quiz_id
+└── score
+```
 
 Installation
 ------------
