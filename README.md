@@ -70,9 +70,7 @@ Tech Stack
 
 Database
 --------
-
-Database name: quiz_system_mukib
-
+```plaintext
 Tables:
 
 users
