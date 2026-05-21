@@ -5,6 +5,11 @@
 
 if(isset($_POST['saveQuiz'])){
 
+$title =
+$conn->real_escape_string($_POST['title']);
+
+$time =
+(int)$_POST['time'];
 
 $conn->query(
 
@@ -17,9 +22,8 @@ time_limit
 
 VALUES(
 
-'".$_POST['title']."',
-
-'".$_POST['time']."'
+'$title',
+'$time'
 
 )"
 
@@ -27,23 +31,24 @@ VALUES(
 
 }
 
-
 if(isset($_GET['delete'])){
 
-
-$id=
-(int)
-$_GET['delete'];
-
+$id =
+(int)$_GET['delete'];
 
 $conn->query(
 
 "DELETE FROM quizzes
-
 WHERE id='$id'"
 
 );
 
+$conn->query(
+
+"DELETE FROM questions
+WHERE quiz_id='$id'"
+
+);
 
 header(
 "Location: quiz_management.php"
@@ -56,22 +61,31 @@ exit();
 ?>
 
 <style>
-body {
-    background: #0f172a;
-    min-height: 100vh;
+
+h1{
+color:#2563eb!important;
+font-weight:bold;
 }
 
-h1,h2,h3,h4,h5,h6{
-    color:white!important;
+.quiz-card{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(37,99,235,.15);
 }
 
 .table td{
-    color:white!important;
+color:#0f172a!important;
+font-weight:600;
 }
+
+.table th{
+color:white!important;
+}
+
 </style>
 
-<div class="container mt-5 text-white">
-
+<div class="container mt-5">
 
 <h1>
 
@@ -79,58 +93,62 @@ h1,h2,h3,h4,h5,h6{
 
 </h1>
 
-
 <a
 href="dashboard.php"
-class="btn btn-warning">
+class="btn btn-primary">
 
 ← Back
 
 </a>
 
-
 <br><br>
 
-
+<div class="quiz-card">
 
 <form method="POST">
-
 
 <input
 name="title"
 class="form-control"
-placeholder="Quiz Title">
-
+placeholder="Quiz Title"
+required>
 
 <br>
-
 
 <input
+type="number"
 name="time"
 class="form-control"
-placeholder="Time">
-
+placeholder="Time In Minutes"
+required>
 
 <br>
-
 
 <button
 name="saveQuiz"
-class="btn btn-success">
+class="btn btn-primary">
 
 Save Quiz
 
 </button>
 
-
 </form>
 
+</div>
 
-<hr>
+<br><br>
 
+<div class="card p-4">
 
-<table class="table table-dark">
+<h3 style="color:#2563eb;">
 
+📚 Saved Quizzes
+
+</h3>
+
+<br>
+
+<table class="table">
 
 <tr>
 
@@ -138,47 +156,36 @@ Save Quiz
 
 <th>Quiz</th>
 
-<th>Questions</th>
+<th>Total Questions</th>
+
+<th>Time</th>
 
 <th>Action</th>
 
 </tr>
 
-
 <?php
 
-$data=
+$data =
 $conn->query(
-
-"SELECT * FROM quizzes"
-
+"SELECT * FROM quizzes
+ORDER BY id DESC"
 );
 
+while($row = $data->fetch_assoc()){
 
-while(
-$row=
-$data->fetch_assoc()
-){
-
-
-$count=
+$count =
 $conn->query(
 
 "SELECT COUNT(*) total
-
 FROM questions
-
 WHERE quiz_id='".$row['id']."'"
 
-)
-
-->fetch_assoc();
+)->fetch_assoc();
 
 ?>
 
-
 <tr>
-
 
 <td>
 
@@ -186,15 +193,13 @@ WHERE quiz_id='".$row['id']."'"
 
 </td>
 
-
-<td style="color:#60a5fa!important;">
+<td style="color:#2563eb!important;">
 
 <?= $row['title'] ?>
 
 </td>
 
-
-<td style="color:#60a5fa!important;">
+<td>
 
 <?= $count['total'] ?>
 
@@ -202,39 +207,42 @@ Questions
 
 </td>
 
-
 <td>
 
+<?= $row['time_limit'] ?>
+
+Min
+
+</td>
+
+<td>
 
 <a
 href="question_management.php?quiz=<?= $row['id'] ?>"
 class="btn btn-primary btn-sm">
 
-Questions
+Manage Questions
 
 </a>
 
-
 <a
 href="?delete=<?= $row['id'] ?>"
-class="btn btn-danger btn-sm">
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this quiz?')">
 
 Delete
 
 </a>
 
-
 </td>
-
 
 </tr>
 
-
 <?php } ?>
-
 
 </table>
 
+</div>
 
 </div>
 
