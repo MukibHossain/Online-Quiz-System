@@ -14,16 +14,17 @@ if(isset($_POST['submit'])){
 
     $user_id = $_SESSION['user_id'];
 
-    $check = $conn->query(
-        "SELECT id FROM results
+    $conn->query(
+        "DELETE FROM results
         WHERE user_id='$user_id'
         AND quiz_id='$quiz_id'"
     );
 
-    if($check->num_rows > 0){
-        echo "<script>alert('Already attempted');location='dashboard.php';</script>";
-        exit();
-    }
+    $conn->query(
+        "DELETE FROM user_answers
+        WHERE user_id='$user_id'
+        AND quiz_id='$quiz_id'"
+    );
 
     $questions = $conn->query(
         "SELECT * FROM questions
