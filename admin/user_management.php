@@ -1,216 +1,98 @@
 <?php require '../config/database.php'; ?>
 <?php include '../includes/header.php'; ?>
 
-
 <?php
 
 if(isset($_GET['delete'])){
 
-$id=$_GET['delete'];
+    $id=$_GET['delete'];
 
-$conn->query(
+    $conn->query(
+        "DELETE FROM users
+        WHERE id='$id'"
+    );
 
-"DELETE FROM users
-WHERE id='$id'"
+    header(
+        "Location:user_management.php"
+    );
 
-);
-
-header(
-"Location:user_management.php"
-);
-
-exit();
+    exit();
 
 }
 
 ?>
 
-
 <div class="container mt-5">
 
+    <h1>
+        👥 User Management
+    </h1>
 
-<h1>
+    
+        href="dashboard.php"
+        class="btn btn-primary">
+        ← Back
+    </a>
 
-👥 User Management
+    <br><br>
 
-</h1>
+    <input
+        id="search"
+        class="form-control"
+        placeholder="Search user...">
 
+    <br>
 
+    <div class="card p-4">
 
-<a
-href="dashboard.php"
-class="btn btn-primary">
+        <table class="table">
 
-← Back
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
 
-</a>
+            <tbody id="result"></tbody>
 
+        </table>
 
-
-<br><br>
-
-
-
-<input
-id="search"
-class="form-control"
-placeholder="Search user...">
-
-
-<br>
-
-
-
-<div class="card p-4">
-
-
-<table
-class="table"
-id="myTable">
-
-
-<tr>
-
-<th>ID</th>
-
-<th>Name</th>
-
-<th>Email</th>
-
-<th>Role</th>
-
-<th>Action</th>
-
-</tr>
-
-
-
-<?php
-
-$users=
-$conn->query(
-
-"SELECT * FROM users
-ORDER BY id"
-
-);
-
-
-while(
-$user=
-$users->fetch_assoc()
-){
-
-?>
-
-
-<tr>
-
-<td>
-
-<?= $user['id'] ?>
-
-</td>
-
-
-<td>
-
-<?= $user['name'] ?>
-
-</td>
-
-
-<td>
-
-<?= $user['email'] ?>
-
-</td>
-
-
-<td>
-
-<?= $user['role'] ?>
-
-</td>
-
-
-<td>
-
-<a
-href="?delete=<?= $user['id'] ?>"
-class="btn btn-primary">
-
-Delete
-
-</a>
-
-</td>
-
-
-</tr>
-
-
-<?php } ?>
-
-
-</table>
-
+    </div>
 
 </div>
-
-
-</div>
-
-
-
-
 
 <script>
 
+function loadUsers(value=''){
+
+    fetch(
+        '../ajax/search_user.php?search='+value
+    )
+
+    .then(res=>res.text())
+
+    .then(data=>{
+
+        document
+            .getElementById('result')
+            .innerHTML = data;
+
+    });
+
+}
+
 document
-.getElementById(
-'search'
-)
+    .getElementById('search')
+    .addEventListener('keyup', function(){
 
-.addEventListener(
-'keyup',
+        loadUsers(this.value);
 
-function(){
+    });
 
-let value=
-this.value
-.toLowerCase();
-
-
-let rows=
-document
-.querySelectorAll(
-'#myTable tr'
-);
-
-
-rows.forEach(
-(row,index)=>{
-
-if(index==0)return;
-
-
-row.style.display=
-
-row.innerText
-.toLowerCase()
-.includes(value)
-
-? ''
-
-:'none';
-
-});
-
-});
+loadUsers();
 
 </script>
-
-
 
 <?php include '../includes/footer.php'; ?>
