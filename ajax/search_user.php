@@ -9,3 +9,22 @@ $data = $conn->query(
 WHERE name LIKE '%$search%'
 OR email LIKE '%$search%'"
 );
+
+while($row = $data->fetch_assoc()){
+
+echo "
+
+<tr>
+
+<td>{$row['name']}</td>
+
+<td>{$row['email']}</td>
+
+<td>{$row['role']}</td>
+
+</tr>
+
+";
+
+}
+?>
