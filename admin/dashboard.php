@@ -1,31 +1,27 @@
 <?php require '../config/database.php'; ?>
 <?php include '../includes/header.php'; ?>
 
-
 <?php
 
-$total_users=
+$total_users =
 $conn->query(
 "SELECT COUNT(*) total
 FROM users"
 )->fetch_assoc()['total'];
 
-
-$total_quizzes=
+$total_quizzes =
 $conn->query(
 "SELECT COUNT(*) total
 FROM quizzes"
 )->fetch_assoc()['total'];
 
-
-$total_attempts=
+$total_attempts =
 $conn->query(
 "SELECT COUNT(*) total
 FROM results"
 )->fetch_assoc()['total'];
 
-
-$report_status=
+$report_status =
 $total_attempts > 0
 ?
 "Ready"
@@ -36,9 +32,27 @@ $total_attempts > 0
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<style>
+
+h1{
+color:#2563eb!important;
+font-weight:bold;
+}
+
+.card h4{
+color:#2563eb!important;
+font-weight:bold;
+}
+
+.card h2{
+color:#1d4ed8!important;
+font-weight:bold;
+font-size:40px;
+}
+
+</style>
 
 <div class="container mt-4">
-
 
 <h1 class="mb-4">
 
@@ -48,8 +62,6 @@ Admin Dashboard
 
 </h1>
 
-
-
 <a
 href="../index.php"
 class="btn btn-primary mb-4">
@@ -58,14 +70,7 @@ class="btn btn-primary mb-4">
 
 </a>
 
-
-
-
-
 <div class="row">
-
-
-
 
 <div class="col-md-3 mb-4">
 
@@ -83,10 +88,6 @@ class="btn btn-primary mb-4">
 
 </div>
 
-
-
-
-
 <div class="col-md-3 mb-4">
 
 <div class="card">
@@ -102,10 +103,6 @@ class="btn btn-primary mb-4">
 </div>
 
 </div>
-
-
-
-
 
 <div class="col-md-3 mb-4">
 
@@ -123,10 +120,6 @@ class="btn btn-primary mb-4">
 
 </div>
 
-
-
-
-
 <div class="col-md-3 mb-4">
 
 <div class="card">
@@ -143,42 +136,43 @@ class="btn btn-primary mb-4">
 
 </div>
 
-
-
 </div>
-
-
-
-
 
 <div class="mb-4">
 
+<a
+href="quiz_management.php"
+class="btn btn-primary">
 
-<a href="quiz_management.php" class="btn btn-primary">
 Quiz Management
+
 </a>
 
+<a
+href="question_management.php"
+class="btn btn-primary">
 
-<a href="question_management.php" class="btn btn-primary">
 Question Management
+
 </a>
 
+<a
+href="user_management.php"
+class="btn btn-primary">
 
-<a href="user_management.php" class="btn btn-primary">
 User Management
+
 </a>
 
+<a
+href="reports.php"
+class="btn btn-primary">
 
-<a href="reports.php" class="btn btn-primary">
 Reports
-</a>
 
+</a>
 
 </div>
-
-
-
-
 
 <div class="card p-4">
 
@@ -186,12 +180,7 @@ Reports
 
 </div>
 
-
 </div>
-
-
-
-
 
 <script>
 
@@ -234,7 +223,5 @@ data:[
 );
 
 </script>
-
-
 
 <?php include '../includes/footer.php'; ?>
