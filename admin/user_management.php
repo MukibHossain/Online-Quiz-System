@@ -5,61 +5,89 @@
 
 if(isset($_GET['delete'])){
 
-    $id=$_GET['delete'];
+$id = $_GET['delete'];
 
-    $conn->query(
-        "DELETE FROM users
-        WHERE id='$id'"
-    );
+$conn->query(
+"DELETE FROM users
+WHERE id='$id'"
+);
 
-    header(
-        "Location:user_management.php"
-    );
+header(
+"Location:user_management.php"
+);
 
-    exit();
+exit();
 
 }
 
 ?>
 
+<style>
+
+h1{
+color:#2563eb!important;
+font-weight:bold;
+}
+
+.table th{
+color:white!important;
+}
+
+.table td{
+color:#0f172a!important;
+font-weight:600;
+}
+
+</style>
+
 <div class="container mt-5">
 
-    <h1>
-        👥 User Management
-    </h1>
+<h1>
 
-    
-        href="dashboard.php"
-        class="btn btn-primary">
-        ← Back
-    </a>
+👥 User Management
 
-    <br><br>
+</h1>
 
-    <input
-        id="search"
-        class="form-control"
-        placeholder="Search user...">
+<a
+href="dashboard.php"
+class="btn btn-primary">
 
-    <br>
+← Back
 
-    <div class="card p-4">
+</a>
 
-        <table class="table">
+<br><br>
 
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Action</th>
-            </tr>
+<input
+id="search"
+class="form-control"
+placeholder="Search user...">
 
-            <tbody id="result"></tbody>
+<br>
 
-        </table>
+<div class="card p-4">
 
-    </div>
+<table class="table">
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Role</th>
+
+<th>Action</th>
+
+</tr>
+
+<tbody id="result"></tbody>
+
+</table>
+
+</div>
 
 </div>
 
@@ -67,29 +95,33 @@ if(isset($_GET['delete'])){
 
 function loadUsers(value=''){
 
-    fetch(
-        '../ajax/search_user.php?search='+value
-    )
+fetch(
+'../ajax/search_user.php?search='+value
+)
 
-    .then(res=>res.text())
+.then(res=>res.text())
 
-    .then(data=>{
+.then(data=>{
 
-        document
-            .getElementById('result')
-            .innerHTML = data;
+document
+.getElementById('result')
+.innerHTML = data;
 
-    });
+});
 
 }
 
 document
-    .getElementById('search')
-    .addEventListener('keyup', function(){
+.getElementById('search')
 
-        loadUsers(this.value);
+.addEventListener(
+'keyup',
 
-    });
+function(){
+
+loadUsers(this.value);
+
+});
 
 loadUsers();
 
