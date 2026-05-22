@@ -14,10 +14,11 @@ if(isset($_POST['submit'])){
 
     $user_id = $_SESSION['user_id'];
 
+    // Purer data delete
     $conn->query("DELETE FROM results WHERE user_id='$user_id' AND quiz_id='$quiz_id'");
     $conn->query("DELETE FROM user_answers WHERE user_id='$user_id' AND quiz_id='$quiz_id'");
 
-    // FIXED: prepared statement diye fresh query
+    // FIXED: prepared statement
     $stmt = $conn->prepare("SELECT * FROM questions WHERE quiz_id=?");
     $stmt->bind_param("i", $quiz_id);
     $stmt->execute();
@@ -26,7 +27,13 @@ if(isset($_POST['submit'])){
     $total = 0;
     $score = 0;
 
+    // FIXED: answer + score calculation alag loop e
+    $rows = [];
     while($q = $questions->fetch_assoc()){
+        $rows[] = $q;
+    }
+
+    foreach($rows as $q){
 
         $total++;
 
@@ -34,7 +41,10 @@ if(isset($_POST['submit'])){
         $correct = trim($q['correct_answer']);
 
         // User answer save
-        $ins = $conn->prepare("INSERT INTO user_answers(user_id, quiz_id, question_id, selected_answer) VALUES(?,?,?,?)");
+        $ins = $conn->prepare(
+            "INSERT INTO user_answers(user_id, quiz_id, question_id, selected_answer)
+             VALUES(?,?,?,?)"
+        );
         $ins->bind_param("iiis", $user_id, $quiz_id, $q['id'], $answer);
         $ins->execute();
 
@@ -45,8 +55,11 @@ if(isset($_POST['submit'])){
 
     }
 
-    // Result save
-    $res = $conn->prepare("INSERT INTO results(user_id, quiz_id, score, total) VALUES(?,?,?,?)");
+    // FIXED: ekbar e insert, prepared statement
+    $res = $conn->prepare(
+        "INSERT INTO results(user_id, quiz_id, score, total)
+         VALUES(?,?,?,?)"
+    );
     $res->bind_param("iiii", $user_id, $quiz_id, $score, $total);
     $res->execute();
 
@@ -116,7 +129,7 @@ body{
 
         <div class="mb-4">
             <a href="quiz_list.php" class="btn btn-warning btn-lg me-2">← Back</a>
-            <a href="../index.php" class="btn btn-info btn-lg">🏠 Home</a>
+            <a href="../index.php"  class="btn btn-info btn-lg">🏠 Home</a>
         </div>
 
         <div id="timer" class="timer"></div>
