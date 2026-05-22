@@ -48,8 +48,15 @@ elseif($percentage >= 60){  $grade = "C";  $status = "Good";        }
 elseif($percentage >= 50){  $grade = "D";  $status = "Average";     }
 else{                        $grade = "F";  $status = "Failed";      }
 
+// Questions WITH user answers fetch
 $questions = $conn->query(
-"SELECT * FROM questions WHERE quiz_id='$quiz_id'"
+"SELECT q.*, ua.selected_answer
+FROM questions q
+LEFT JOIN user_answers ua
+    ON ua.question_id = q.id
+    AND ua.user_id = '$user_id'
+    AND ua.quiz_id = '$quiz_id'
+WHERE q.quiz_id = '$quiz_id'"
 );
 
 ?>
@@ -146,6 +153,7 @@ body{
     color: #0f172a;
     font-size: 22px;
     font-weight: bold;
+    margin-bottom: 12px;
 }
 
 .option{
@@ -183,8 +191,8 @@ body{
         <br>
 
         <div class="d-flex gap-2 flex-wrap">
-            <a href="dashboard.php"  class="btn btn-primary">🏠 Dashboard</a>
-            <a href="quiz_list.php"  class="btn btn-primary">📝 Quiz List</a>
+            <a href="dashboard.php"   class="btn btn-primary">🏠 Dashboard</a>
+            <a href="quiz_list.php"   class="btn btn-primary">📝 Quiz List</a>
             <a href="certificate.php" class="btn btn-primary">🏆 Certificate</a>
         </div>
 
@@ -241,6 +249,11 @@ body{
         <?php
         $i = 1;
         while($q = $questions->fetch_assoc()){
+
+            $selected = trim($q['selected_answer'] ?? '');
+            $correct  = trim($q['correct_answer']);
+            $is_right = strtolower($selected) == strtolower($correct);
+
         ?>
 
         <div class="review-box">
@@ -249,9 +262,23 @@ body{
                 <?= $i ?>. <?= htmlspecialchars($q['question']) ?>
             </div>
 
-            <div class="option correct">
-                ✅ Correct Answer: <?= htmlspecialchars($q['correct_answer']) ?>
-            </div>
+            <?php if($is_right){ ?>
+
+                <div class="option correct">
+                    ✅ Your Answer: <?= htmlspecialchars($selected) ?>
+                </div>
+
+            <?php } else { ?>
+
+                <div class="option wrong">
+                    ❌ Your Answer: <?= $selected ? htmlspecialchars($selected) : 'No Answer' ?>
+                </div>
+
+                <div class="option correct">
+                    ✅ Correct Answer: <?= htmlspecialchars($correct) ?>
+                </div>
+
+            <?php } ?>
 
         </div>
 
