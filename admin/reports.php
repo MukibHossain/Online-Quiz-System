@@ -73,8 +73,11 @@ min-height:100vh;
 }
 
 .report-title{
+
 color:white!important;
+
 font-weight:bold;
+
 }
 
 .report-card{
@@ -94,13 +97,19 @@ height:100%;
 }
 
 .report-card h3{
-color:#2563eb;
+
+color:#2563eb!important;
+
 font-weight:bold;
+
 }
 
 .report-card h2{
+
 font-weight:bold;
-color:#0f172a;
+
+color:#2563eb!important;
+
 }
 
 .chart-box{
