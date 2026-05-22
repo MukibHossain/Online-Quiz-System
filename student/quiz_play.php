@@ -14,22 +14,14 @@ if(isset($_POST['submit'])){
 
     $user_id = $_SESSION['user_id'];
 
-    $conn->query(
-        "DELETE FROM results
-        WHERE user_id='$user_id'
-        AND quiz_id='$quiz_id'"
-    );
+    $conn->query("DELETE FROM results WHERE user_id='$user_id' AND quiz_id='$quiz_id'");
+    $conn->query("DELETE FROM user_answers WHERE user_id='$user_id' AND quiz_id='$quiz_id'");
 
-    $conn->query(
-        "DELETE FROM user_answers
-        WHERE user_id='$user_id'
-        AND quiz_id='$quiz_id'"
-    );
-
-    $questions = $conn->query(
-        "SELECT * FROM questions
-        WHERE quiz_id='$quiz_id'"
-    );
+    // FIXED: prepared statement diye fresh query
+    $stmt = $conn->prepare("SELECT * FROM questions WHERE quiz_id=?");
+    $stmt->bind_param("i", $quiz_id);
+    $stmt->execute();
+    $questions = $stmt->get_result();
 
     $total = 0;
     $score = 0;
@@ -38,43 +30,25 @@ if(isset($_POST['submit'])){
 
         $total++;
 
-        $answer = $_POST['q'.$q['id']] ?? '';
+        $answer  = trim($_POST['q'.$q['id']] ?? '');
+        $correct = trim($q['correct_answer']);
 
-        $conn->query(
-            "INSERT INTO user_answers(
-                user_id,
-                quiz_id,
-                question_id,
-                selected_answer
-            )
-            VALUES(
-                '$user_id',
-                '$quiz_id',
-                '{$q['id']}',
-                '$answer'
-            )"
-        );
+        // User answer save
+        $ins = $conn->prepare("INSERT INTO user_answers(user_id, quiz_id, question_id, selected_answer) VALUES(?,?,?,?)");
+        $ins->bind_param("iiis", $user_id, $quiz_id, $q['id'], $answer);
+        $ins->execute();
 
-        if($answer == $q['correct_answer']){
+        // Score check
+        if(strtolower($answer) == strtolower($correct)){
             $score++;
         }
 
     }
 
-    $conn->query(
-        "INSERT INTO results(
-            user_id,
-            quiz_id,
-            score,
-            total
-        )
-        VALUES(
-            '$user_id',
-            '$quiz_id',
-            '$score',
-            '$total'
-        )"
-    );
+    // Result save
+    $res = $conn->prepare("INSERT INTO results(user_id, quiz_id, score, total) VALUES(?,?,?,?)");
+    $res->bind_param("iiii", $user_id, $quiz_id, $score, $total);
+    $res->execute();
 
     header("Location: result.php");
     exit();
@@ -82,15 +56,13 @@ if(isset($_POST['submit'])){
 }
 
 $quiz = $conn->query(
-    "SELECT * FROM quizzes
-    WHERE id='$quiz_id'"
+    "SELECT * FROM quizzes WHERE id='$quiz_id'"
 )->fetch_assoc();
 
 $minutes = (int)($quiz['time_limit'] ?? 10);
 
 $data = $conn->query(
-    "SELECT * FROM questions
-    WHERE quiz_id='$quiz_id'"
+    "SELECT * FROM questions WHERE quiz_id='$quiz_id'"
 );
 
 ?>
@@ -164,20 +136,20 @@ body{
                     <?= $i ?>. <?= htmlspecialchars($row['question']) ?>
                 </h4>
 
-                <input type="radio" name="q<?= $row['id'] ?>" value="<?= $row['option1'] ?>">
-                <?= $row['option1'] ?>
+                <input type="radio" name="q<?= $row['id'] ?>" value="<?= htmlspecialchars($row['option1']) ?>">
+                <?= htmlspecialchars($row['option1']) ?>
                 <br>
 
-                <input type="radio" name="q<?= $row['id'] ?>" value="<?= $row['option2'] ?>">
-                <?= $row['option2'] ?>
+                <input type="radio" name="q<?= $row['id'] ?>" value="<?= htmlspecialchars($row['option2']) ?>">
+                <?= htmlspecialchars($row['option2']) ?>
                 <br>
 
-                <input type="radio" name="q<?= $row['id'] ?>" value="<?= $row['option3'] ?>">
-                <?= $row['option3'] ?>
+                <input type="radio" name="q<?= $row['id'] ?>" value="<?= htmlspecialchars($row['option3']) ?>">
+                <?= htmlspecialchars($row['option3']) ?>
                 <br>
 
-                <input type="radio" name="q<?= $row['id'] ?>" value="<?= $row['option4'] ?>">
-                <?= $row['option4'] ?>
+                <input type="radio" name="q<?= $row['id'] ?>" value="<?= htmlspecialchars($row['option4']) ?>">
+                <?= htmlspecialchars($row['option4']) ?>
 
             </div>
 
