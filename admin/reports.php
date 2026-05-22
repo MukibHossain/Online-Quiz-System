@@ -143,6 +143,13 @@ class="btn btn-primary">
 
 </a>
 
+<a href="../exports/excel_export.php"
+class="btn btn-success ms-2">
+
+📥 Download Excel
+
+</a>
+
 <br><br>
 
 <div class="row">
@@ -173,7 +180,9 @@ class="btn btn-primary">
 
 <?= $average_score ?>
 
-%</h2>
+%
+
+</h2>
 
 </div>
 
@@ -231,6 +240,8 @@ label:'Average Quiz Score',
 data:
 
 <?= json_encode($scores) ?>,
+
+backgroundColor:'#2563eb',
 
 borderWidth:2
 
