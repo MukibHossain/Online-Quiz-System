@@ -1,13 +1,11 @@
+```php
 <?php require '../config/database.php'; ?>
 <?php include '../includes/header.php'; ?>
 
 <?php
 
-
 $user_id=
 $_SESSION['user_id'];
-
-
 
 $user=
 $conn->query(
@@ -20,41 +18,28 @@ WHERE id='$user_id'"
 
 ->fetch_assoc();
 
-
-
 $user['phone']=
 $user['phone']
 ?? '';
-
-
 
 $user['university']=
 $user['university']
 ?? '';
 
-
-
 $user['photo']=
 $user['photo']
 ?? '';
 
-
-
 if(isset($_POST['save'])){
-
 
 $phone=
 $_POST['phone'];
 
-
 $university=
 $_POST['university'];
 
-
 $photo=
 $user['photo'];
-
-
 
 if(
 
@@ -66,14 +51,11 @@ $_FILES['photo']['error']==0
 
 ){
 
-
 $uploadDir=
 
 dirname(__DIR__)
 
 ."/uploads/";
-
-
 
 $fileName=
 
@@ -87,15 +69,11 @@ $_FILES['photo']['name']
 
 );
 
-
-
 $targetFile=
 
 $uploadDir
 
 .$fileName;
-
-
 
 if(
 
@@ -116,8 +94,6 @@ $fileName;
 
 }
 
-
-
 $conn->query(
 
 "UPDATE users
@@ -134,8 +110,6 @@ WHERE id='$user_id'"
 
 );
 
-
-
 header(
 "Location: profile.php"
 );
@@ -144,10 +118,7 @@ exit();
 
 }
 
-
-
 $image=
-
 
 !empty(
 $user['photo']
@@ -178,13 +149,11 @@ body {
 
 <div class="container mt-5 text-white">
 
-
 <h1 style="color:white!important;">
 
 👤 My Profile
 
 </h1>
-
 
 <a
 href="dashboard.php"
@@ -194,7 +163,6 @@ class="btn btn-warning btn-lg me-2">
 
 </a>
 
-
 <a
 href="../index.php"
 class="btn btn-info btn-lg">
@@ -203,10 +171,7 @@ class="btn btn-info btn-lg">
 
 </a>
 
-
 <br><br>
-
-
 
 <img
 src="<?= $image ?>"
@@ -223,34 +188,30 @@ border:4px solid white;
 
 ">
 
-
 <br><br>
-
-
 
 <form
 method="POST"
 enctype="multipart/form-data">
-
 
 <input
 type="file"
 name="photo"
 class="form-control">
 
-
 <br>
 
-
 <input
+type="text"
 name="phone"
 value="<?= htmlspecialchars($user['phone']) ?>"
 class="form-control"
-placeholder="Phone">
-
+placeholder="Phone"
+pattern="[0-9]+"
+maxlength="15"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
 <br>
-
 
 <input
 name="university"
@@ -258,9 +219,7 @@ value="<?= htmlspecialchars($user['university']) ?>"
 class="form-control"
 placeholder="University">
 
-
 <br>
-
 
 <button
 name="save"
@@ -270,12 +229,9 @@ Save Profile
 
 </button>
 
-
 </form>
 
-
 <hr>
-
 
 <div class="profile-info">
 
@@ -287,7 +243,6 @@ Name:
 
 </h4>
 
-
 <h4>
 
 Email:
@@ -296,7 +251,6 @@ Email:
 
 </h4>
 
-
 <h4>
 
 Phone:
@@ -304,7 +258,6 @@ Phone:
 <?= htmlspecialchars($user['phone']) ?>
 
 </h4>
-
 
 <h4>
 
@@ -316,7 +269,7 @@ University:
 
 </div>
 
-
 </div>
 
 <?php include '../includes/footer.php'; ?>
+```
