@@ -189,4 +189,26 @@ Author
 
 MukibHossain [Github: https://github.com/MukibHossain]
 
-Testing YOLO badge Yes
+## Setup Instructions
+
+1. Copy the project to your web server:
+   - XAMPP: `C:\xampp\htdocs\online_quiz_system`
+   - WAMP: `C:\wamp64\www\online_quiz_system`
+
+2. Start **Apache** and **MySQL**.
+
+3. Open **phpMyAdmin** and create a database named:
+   ```
+   quiz_system_mukib
+   ```
+
+4. Import the `database/db.sql` file into the database.
+
+5. If needed, update the database credentials in `config/database.php`.
+
+6. Open your browser and visit:
+   ```
+   http://localhost/online_quiz_system/
+   ```
+
+7. Log in using the sample admin or student accounts provided below.
